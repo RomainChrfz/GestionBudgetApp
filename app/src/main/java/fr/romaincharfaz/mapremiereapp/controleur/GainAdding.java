@@ -14,7 +14,7 @@ import android.widget.Toast;
 import fr.romaincharfaz.mapremiereapp.R;
 
 public class GainAdding extends AppCompatActivity {
-    public static final String EXTRA_BANQUE = "fr.romaincharfaz.mapremiereapp.controleur.GainAdding.EXTRA_BANQUE";
+    public static final String EXTRA_DESCRIPTION = "fr.romaincharfaz.mapremiereapp.controleur.GainAdding.EXTRA_DESCRIPTION";
     public static final String EXTRA_VALUE = "fr.romaincharfaz.mapremiereapp.controleur.GainAdding.EXTRA_VALUE";
 
 
@@ -42,7 +42,7 @@ public class GainAdding extends AppCompatActivity {
         }
 
         Intent data = new Intent();
-        data.putExtra(EXTRA_BANQUE, textDescription);
+        data.putExtra(EXTRA_DESCRIPTION, textDescription);
         data.putExtra(EXTRA_VALUE, textvalue);
 
         setResult(RESULT_OK, data);

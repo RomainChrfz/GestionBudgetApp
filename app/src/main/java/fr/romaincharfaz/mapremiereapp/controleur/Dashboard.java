@@ -17,13 +17,16 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -70,8 +73,32 @@ public class Dashboard extends AppCompatActivity {
         mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Dashboard.this, GainAdding.class);
-                startActivityForResult(intent, ADD_GAIN_REQUEST);
+                try {
+                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(Dashboard.this, R.style.BottomSheetDialogTheme);
+                    final View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet, (LinearLayout) findViewById(R.id.bottom_sheet_container));
+
+                    bottomSheetView.findViewById(R.id.btn_valider).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            EditText mDescription = (EditText) bottomSheetView.findViewById(R.id.et_description);
+                            EditText mValue = (EditText) bottomSheetView.findViewById(R.id.et_valeur);
+                            String description = mDescription.getText().toString().trim();
+                            String value = mValue.getText().toString().trim();
+                            if (description.isEmpty() || value.isEmpty()) {
+                                return;
+                            }
+                            double nvalue = Double.valueOf(value);
+                            Gain newGain = new Gain(nvalue, description, "", "", currentLivret);
+                            gainViewModel.insert(newGain);
+                            bottomSheetDialog.dismiss();
+                        }
+                    });
+
+                    bottomSheetDialog.setContentView(bottomSheetView);
+                    bottomSheetDialog.show();
+                }catch (Exception e){
+                    Toast.makeText(Dashboard.this, e.toString(), Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -129,10 +156,10 @@ public class Dashboard extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_GAIN_REQUEST && resultCode == RESULT_OK) {
-            String newBanque = data.getStringExtra(GainAdding.EXTRA_BANQUE);
+            String newDescription = data.getStringExtra(GainAdding.EXTRA_DESCRIPTION);
             String newValuetxt = data.getStringExtra(GainAdding.EXTRA_VALUE);
             double newValue = Double.valueOf(newValuetxt);
-            Gain gain = new Gain(newValue,"","", "",currentLivret);
+            Gain gain = new Gain(newValue, newDescription,"", "",currentLivret);
             gainViewModel.insert(gain);
         }
     }
