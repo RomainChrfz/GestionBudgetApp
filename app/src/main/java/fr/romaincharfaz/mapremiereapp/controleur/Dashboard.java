@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +31,8 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 import java.util.List;
@@ -39,6 +43,7 @@ import fr.romaincharfaz.mapremiereapp.model.User;
 import fr.romaincharfaz.mapremiereapp.view.GainAdapter;
 import fr.romaincharfaz.mapremiereapp.view.GainViewModel;
 import fr.romaincharfaz.mapremiereapp.view.UserViewModel;
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class Dashboard extends AppCompatActivity {
     public static final int ADD_GAIN_REQUEST = 1;
@@ -48,6 +53,8 @@ public class Dashboard extends AppCompatActivity {
     private UserViewModel userViewModel;
     private GainViewModel gainViewModel;
 
+    private boolean edit;
+    private Gain deletedGain;
     private String currentLivret;
     private String currentUser;
     private String testtxt = new String();
@@ -75,62 +82,12 @@ public class Dashboard extends AppCompatActivity {
         mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(Dashboard.this, R.style.BottomSheetDialogTheme);
-                    final View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet, (LinearLayout) findViewById(R.id.bottom_sheet_container));
-
-                    final NumberPicker day = (NumberPicker)bottomSheetView.findViewById(R.id.day_picker);
-                    day.setFormatter(new NumberPicker.Formatter() {
-                        @Override
-                        public String format(int value) {
-                            return String.format("%02d",value);
-                        }
-                    });
-                    final NumberPicker month = (NumberPicker)bottomSheetView.findViewById(R.id.month_picker);
-                    final NumberPicker year = (NumberPicker)bottomSheetView.findViewById(R.id.year_picker);
-
-                    final String[] months = new String[]{"jan.","fév.","mar.","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."};
-
-                    day.setMinValue(1);
-                    day.setMaxValue(31);
-                    month.setDisplayedValues(months);
-                    month.setMinValue(0);
-                    month.setMaxValue(months.length-1);
-                    year.setMinValue(1789);
-                    year.setMaxValue(2100);
-
-                    Calendar c = Calendar.getInstance();
-                    day.setValue(c.get(Calendar.DAY_OF_MONTH));
-                    month.setValue(c.get(Calendar.MONTH));
-                    year.setValue(c.get(Calendar.YEAR));
-
-                    bottomSheetView.findViewById(R.id.btn_valider).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            EditText mDescription = (EditText) bottomSheetView.findViewById(R.id.et_description);
-                            EditText mValue = (EditText) bottomSheetView.findViewById(R.id.et_valeur);
-                            String description = mDescription.getText().toString().trim();
-                            String value = mValue.getText().toString().trim();
-                            if (description.isEmpty() || value.isEmpty()) {
-                                Toast.makeText(Dashboard.this,"Ces champs ne peuvent pas être vide",Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            double nvalue = Double.valueOf(value);
-                            Gain newGain = new Gain(nvalue, description, day.getValue(), month.getValue(),year.getValue(), "", currentLivret);
-                            gainViewModel.insert(newGain);
-                            bottomSheetDialog.dismiss();
-                        }
-                    });
-
-                    bottomSheetDialog.setContentView(bottomSheetView);
-                    bottomSheetDialog.show();
-                }catch (Exception e){
-                    Toast.makeText(Dashboard.this, e.toString(), Toast.LENGTH_LONG).show();
-                }
+                edit = false;
+                bottomsheetconfiguration();
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.recycler);
+        final RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         //recyclerView.setHasFixedSize(true);
 
@@ -146,7 +103,7 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
-        new ItemTouchHelper((new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper((new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -154,11 +111,82 @@ public class Dashboard extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                gainViewModel.delete(adapter.getGainAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(Dashboard.this,"Dépense suprrimée",Toast.LENGTH_SHORT).show();
+                int position = viewHolder.getAdapterPosition();
+                switch (direction) {
+                    case ItemTouchHelper.LEFT :
+                        deletedGain = adapter.getGainAt(position);
+                        gainViewModel.delete(deletedGain);
+                        Snackbar.make(recyclerView, getString(R.string.expense_deleted), Snackbar.LENGTH_LONG).setAction(getString(R.string.undo), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                gainViewModel.insert(deletedGain);
+                            }
+                        }).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addSwipeLeftBackgroundColor(ContextCompat.getColor(Dashboard.this,R.color.red))
+                        .addSwipeLeftActionIcon(R.drawable.ic_delete_sweep_white)
+                        .addSwipeLeftLabel(getString(R.string.delete))
+                        .setSwipeLeftLabelColor(R.color.white)
+                        .create()
+                        .decorate();
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
         })).attachToRecyclerView(recyclerView);
 
+    }
+
+    private void bottomsheetconfiguration() {
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(Dashboard.this, R.style.BottomSheetDialogTheme);
+        final View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet, (LinearLayout) findViewById(R.id.bottom_sheet_container));
+
+        final NumberPicker day = (NumberPicker)bottomSheetView.findViewById(R.id.day_picker);
+        day.setFormatter(new NumberPicker.Formatter() {
+            @Override
+            public String format(int value) {
+                return String.format("%02d",value);
+            }
+        });
+        final NumberPicker month = (NumberPicker)bottomSheetView.findViewById(R.id.month_picker);
+        final NumberPicker year = (NumberPicker)bottomSheetView.findViewById(R.id.year_picker);
+        final String[] months = new String[]{"jan.","fév.","mar.","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."};
+        day.setMinValue(1);
+        day.setMaxValue(31);
+        month.setDisplayedValues(months);
+        month.setMinValue(0);
+        month.setMaxValue(months.length-1);
+        year.setMinValue(1789);
+        year.setMaxValue(2100);
+
+        Calendar c = Calendar.getInstance();
+        day.setValue(c.get(Calendar.DAY_OF_MONTH));
+        month.setValue(c.get(Calendar.MONTH));
+        year.setValue(c.get(Calendar.YEAR));
+
+        bottomSheetView.findViewById(R.id.btn_valider).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText mDescription = (EditText) bottomSheetView.findViewById(R.id.et_description);
+                EditText mValue = (EditText) bottomSheetView.findViewById(R.id.et_valeur);
+                String description = mDescription.getText().toString().trim();
+                String value = mValue.getText().toString().trim();
+                if (description.isEmpty() || value.isEmpty()) {
+                    Toast.makeText(Dashboard.this,"Ces champs ne peuvent pas être vide",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                double nvalue = Double.valueOf(value);
+                Gain newGain = new Gain(nvalue, description, day.getValue(), month.getValue(),year.getValue(), "", currentLivret);
+                gainViewModel.insert(newGain);
+                bottomSheetDialog.dismiss();
+            }
+        });
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
     }
 
     private void total_calcul(List<Gain> totgain) {

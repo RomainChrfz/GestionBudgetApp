@@ -8,14 +8,12 @@
     <string name="et_password_two">Password check</string>
     <string name="btn_connexion">Connexion</string>
     <string name="btn_creation">Create account</string>
-
     <string name="not_existing_username">This username doesn\'t exist</string>
     <string name="password_error">Wrong password</string>
     <string name="empty_error">This field can\'t be empty</string>
     <string name="existing_username_error">This username is already used</string>
     <string name="existing_email_error">This email adress is already used</string>
     <string name="password_not_corresponding">Passwords doesn\'t match</string>
-
     <string name="give_account_name">Give a name to your account book</string>
     <string name="account_solde">What is the current balance ?</string>
     <string name="account_name">Account name</string>
@@ -29,4 +27,7 @@
     <string name="mois">Month</string>
     <string name="annee">Year</string>
     <string name="validate">Confirm</string>
+    <string name="undo">Undo</string>
+    <string name="expense_deleted">Expense deleted</string>
+    <string name="delete">Delete</string>
 </resources>

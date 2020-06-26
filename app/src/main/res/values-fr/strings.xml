@@ -28,4 +28,7 @@
     <string name="mois">Mois</string>
     <string name="annee">Année</string>
     <string name="validate">Valider</string>
+    <string name="undo">Annuler</string>
+    <string name="expense_deleted">Dépense supprimée</string>
+    <string name="delete">Supprimer</string>
 </resources>
