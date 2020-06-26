@@ -13,13 +13,50 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
+        <ImageView
+            android:id="@+id/recycler_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_category_base"
+            android:layout_marginRight="10dp"
+            />
+
+
+        <TextView
+            android:id="@+id/recycler_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/recycler_category"
+            android:layout_toRightOf="@id/recycler_category"
+            android:layout_toStartOf="@id/txt_of_recycler"
+            android:layout_toLeftOf="@id/txt_of_recycler"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Description"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/txt_of_recycler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="value 1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/recycler_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recycler_description"
+            android:layout_toEndOf="@id/recycler_category"
+            android:layout_toRightOf="@id/recycler_category"
+            android:text="jj/mm/yyyy"
             />
 
     </RelativeLayout>

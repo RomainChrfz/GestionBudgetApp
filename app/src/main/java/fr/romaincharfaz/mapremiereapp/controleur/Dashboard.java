@@ -23,12 +23,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Calendar;
 import java.util.List;
 
 import fr.romaincharfaz.mapremiereapp.R;
@@ -77,6 +79,31 @@ public class Dashboard extends AppCompatActivity {
                     final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(Dashboard.this, R.style.BottomSheetDialogTheme);
                     final View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet, (LinearLayout) findViewById(R.id.bottom_sheet_container));
 
+                    final NumberPicker day = (NumberPicker)bottomSheetView.findViewById(R.id.day_picker);
+                    day.setFormatter(new NumberPicker.Formatter() {
+                        @Override
+                        public String format(int value) {
+                            return String.format("%02d",value);
+                        }
+                    });
+                    final NumberPicker month = (NumberPicker)bottomSheetView.findViewById(R.id.month_picker);
+                    final NumberPicker year = (NumberPicker)bottomSheetView.findViewById(R.id.year_picker);
+
+                    final String[] months = new String[]{"jan.","fév.","mar.","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."};
+
+                    day.setMinValue(1);
+                    day.setMaxValue(31);
+                    month.setDisplayedValues(months);
+                    month.setMinValue(0);
+                    month.setMaxValue(months.length-1);
+                    year.setMinValue(1789);
+                    year.setMaxValue(2100);
+
+                    Calendar c = Calendar.getInstance();
+                    day.setValue(c.get(Calendar.DAY_OF_MONTH));
+                    month.setValue(c.get(Calendar.MONTH));
+                    year.setValue(c.get(Calendar.YEAR));
+
                     bottomSheetView.findViewById(R.id.btn_valider).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -85,10 +112,11 @@ public class Dashboard extends AppCompatActivity {
                             String description = mDescription.getText().toString().trim();
                             String value = mValue.getText().toString().trim();
                             if (description.isEmpty() || value.isEmpty()) {
+                                Toast.makeText(Dashboard.this,"Ces champs ne peuvent pas être vide",Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             double nvalue = Double.valueOf(value);
-                            Gain newGain = new Gain(nvalue, description, "", "", currentLivret);
+                            Gain newGain = new Gain(nvalue, description, day.getValue(), month.getValue(),year.getValue(), "", currentLivret);
                             gainViewModel.insert(newGain);
                             bottomSheetDialog.dismiss();
                         }
@@ -149,18 +177,5 @@ public class Dashboard extends AppCompatActivity {
             ss.setSpan(fcsr,0,tot_ss.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         total_txt.setText(ss);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == ADD_GAIN_REQUEST && resultCode == RESULT_OK) {
-            String newDescription = data.getStringExtra(GainAdding.EXTRA_DESCRIPTION);
-            String newValuetxt = data.getStringExtra(GainAdding.EXTRA_VALUE);
-            double newValue = Double.valueOf(newValuetxt);
-            Gain gain = new Gain(newValue, newDescription,"", "",currentLivret);
-            gainViewModel.insert(gain);
-        }
     }
 }

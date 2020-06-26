@@ -39,28 +39,108 @@
         android:layout_width="match_parent"
         android:layout_height="10dp" />
 
-    <EditText
-        android:id="@+id/et_valeur"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Valeur ( indiquer + ou - )"
-        android:inputType="numberDecimal|numberSigned"
-        android:layout_marginHorizontal="20dp"
-        android:background="@drawable/et_custom_bis"
-        android:padding="10dp"
-        />
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_valeur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Valeur ( indiquer + ou - )"
+            android:inputType="numberDecimal|numberSigned"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/et_custom_bis"
+            android:padding="10dp"
+            android:layout_weight="1"
+            />
+
+        <Switch
+            android:id="@+id/mensuel_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mensuel"
+            />
+
+    </LinearLayout>
+
+
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="10dp" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date :"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jour"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mois"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Année"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <NumberPicker
+            android:id="@+id/day_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="30dp"
+            android:theme="@style/NumberPickerTheme"
+            android:background="@drawable/et_custom_bis"
+            />
+
+        <NumberPicker
+            android:id="@+id/month_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="30dp"
+            android:theme="@style/NumberPickerTheme"
+            android:background="@drawable/et_custom_bis"
+            />
+
+        <NumberPicker
+            android:id="@+id/year_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="30dp"
+            android:theme="@style/NumberPickerTheme"
+            android:background="@drawable/et_custom_bis"
+            />
+
+    </LinearLayout>
 
     <Space
         android:layout_width="match_parent"
@@ -78,6 +158,5 @@
     <Space
         android:layout_width="wrap_content"
         android:layout_height="10dp" />
-
 
 </LinearLayout>

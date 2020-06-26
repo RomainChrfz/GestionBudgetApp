@@ -21,11 +21,6 @@
             android:name=".controleur.CreationStepOne"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".controleur.GainAdding"
-            android:parentActivityName=".controleur.Dashboard"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeActionBar" />
-        <activity
             android:name=".controleur.Dashboard"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
