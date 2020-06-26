@@ -18,7 +18,7 @@
     <string name="give_account_name">Donnez un nom à votre compte</string>
     <string name="account_solde">Quel est le solde actuel ?</string>
     <string name="account_name">Nom de compte</string>
-    <string name="next">Suivant</string>
+    <string name="next">Suivant </string>
     <string name="current_solde">Solde actuel du compte</string>
     <string name="back">Précédent</string>
     <string name="description">Description</string>
@@ -31,4 +31,12 @@
     <string name="undo">Annuler</string>
     <string name="expense_deleted">Dépense supprimée</string>
     <string name="delete">Supprimer</string>
+    <string name="add">Ajouter</string>
+    <string name="cat_courses">Courses</string>
+    <string name="cat_fuel">Essence</string>
+    <string name="cat_gift">Cadeau</string>
+    <string name="cat_phone">Téléphone et abonnements</string>
+    <string name="cat_transport_commun">Transports publics</string>
+    <string name="cat_trip">Voyage</string>
+    <string name="cat_base">Inconnu</string>
 </resources>

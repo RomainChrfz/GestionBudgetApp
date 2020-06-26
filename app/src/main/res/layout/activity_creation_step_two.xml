@@ -34,6 +34,8 @@
         android:layout_marginRight="24dp"
         android:background="@drawable/et_custom"
         android:hint="@string/current_solde"
+        android:drawableEnd="@drawable/ic_euro"
+        android:drawableRight="@drawable/ic_euro"
         android:inputType="numberSigned|numberDecimal"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"

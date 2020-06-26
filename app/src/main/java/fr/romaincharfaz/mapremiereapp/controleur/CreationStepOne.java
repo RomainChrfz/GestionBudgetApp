@@ -16,7 +16,6 @@ public class CreationStepOne extends AppCompatActivity {
     public static final String CURRENT_USER_ = "fr.romaincharfaz.mapremiereapp.controler.CreationStepOne.CURENT_USER_";
 
     private String currentUser;
-    private String currentPassword;
     private String string;
 
     private EditText accountName;
@@ -29,7 +28,6 @@ public class CreationStepOne extends AppCompatActivity {
 
         Intent intent = getIntent();
         currentUser = intent.getStringExtra(MainActivity.CURRENT_USER);
-        currentPassword = intent.getStringExtra(MainActivity.CURRENT_PASSWORD);
 
         accountName = (EditText) findViewById(R.id.et_nom_compte);
         nextOne = (TextView) findViewById(R.id.btn_next_one);

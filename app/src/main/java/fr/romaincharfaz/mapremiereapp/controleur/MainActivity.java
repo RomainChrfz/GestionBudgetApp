@@ -20,6 +20,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.Application;
+import android.content.res.Resources;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -36,6 +38,9 @@ import fr.romaincharfaz.mapremiereapp.view.UserViewModel;
 public class MainActivity extends AppCompatActivity {
     public static final String CURRENT_USER = "fr.romaincharfaz.mapremiereapp.controleur.MainActivity.CURRENT_USER";
     public static final String CURRENT_PASSWORD = "fr.romaincharfaz.mapremiereapp.controleur.MainActivity.CURRENT_PASSWORD";
+
+    //private static App mInstance;
+    //private static Resources res;
 
     private TextInputLayout mUsername;
     private TextInputLayout mPassword;

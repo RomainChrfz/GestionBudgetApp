@@ -1,5 +1,6 @@
 package fr.romaincharfaz.mapremiereapp.controleur;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 
 import java.util.List;
@@ -56,5 +60,29 @@ public class PreDashboard extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void addLivret() {
+        Intent intent = new Intent(PreDashboard.this,CreationStepOne.class);
+        intent.putExtra(MainActivity.CURRENT_USER, currentUser);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.add_livret_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_livret:
+                addLivret();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

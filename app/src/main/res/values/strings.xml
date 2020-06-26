@@ -17,7 +17,7 @@
     <string name="give_account_name">Give a name to your account book</string>
     <string name="account_solde">What is the current balance ?</string>
     <string name="account_name">Account name</string>
-    <string name="next">Next</string>
+    <string name="next">Next </string>
     <string name="current_solde">Current balance</string>
     <string name="back">Previous</string>
     <string name="description">Description</string>
@@ -30,4 +30,12 @@
     <string name="undo">Undo</string>
     <string name="expense_deleted">Expense deleted</string>
     <string name="delete">Delete</string>
+    <string name="add">Add</string>
+    <string name="cat_courses">Shopping</string>
+    <string name="cat_fuel">Gas station</string>
+    <string name="cat_gift">Gift</string>
+    <string name="cat_phone">Phone and subscriptions</string>
+    <string name="cat_transport_commun">Public transport</string>
+    <string name="cat_trip">Trip</string>
+    <string name="cat_base">Unknown</string>
 </resources>

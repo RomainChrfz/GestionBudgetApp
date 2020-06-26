@@ -34,12 +34,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import fr.romaincharfaz.mapremiereapp.R;
 import fr.romaincharfaz.mapremiereapp.model.Gain;
 import fr.romaincharfaz.mapremiereapp.model.User;
+import fr.romaincharfaz.mapremiereapp.view.CategoryAdapter;
+import fr.romaincharfaz.mapremiereapp.view.CategoryItem;
 import fr.romaincharfaz.mapremiereapp.view.GainAdapter;
 import fr.romaincharfaz.mapremiereapp.view.GainViewModel;
 import fr.romaincharfaz.mapremiereapp.view.UserViewModel;
@@ -83,7 +86,8 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 edit = false;
-                bottomsheetconfiguration();
+                Gain gainclicked = new Gain(0.0,"",0,0,0,"","");
+                bottomsheetconfiguration(gainclicked);
             }
         });
 
@@ -92,7 +96,24 @@ public class Dashboard extends AppCompatActivity {
         //recyclerView.setHasFixedSize(true);
 
         final GainAdapter adapter = new GainAdapter();
-        recyclerView.setAdapter(adapter);
+        try {
+            recyclerView.setAdapter(adapter);
+        }catch (Exception e){
+            Toast.makeText(this,e.toString(),Toast.LENGTH_LONG);
+        }
+        adapter.setOnItemClickListener(new GainAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+                Gain gainclicked = adapter.getGainAt(position);
+                edit = true;
+                bottomsheetconfiguration(gainclicked);
+            }
+
+            @Override
+            public void OnCatClick(int position) {
+
+            }
+        });
 
         gainViewModel = new ViewModelProvider(this).get(GainViewModel.class);
         gainViewModel.getAllGains(currentLivret).observe(this, new Observer<List<Gain>>() {
@@ -132,7 +153,7 @@ public class Dashboard extends AppCompatActivity {
                         .addSwipeLeftBackgroundColor(ContextCompat.getColor(Dashboard.this,R.color.red))
                         .addSwipeLeftActionIcon(R.drawable.ic_delete_sweep_white)
                         .addSwipeLeftLabel(getString(R.string.delete))
-                        .setSwipeLeftLabelColor(R.color.white)
+                        .setSwipeLeftLabelColor(Color.WHITE)
                         .create()
                         .decorate();
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
@@ -141,11 +162,13 @@ public class Dashboard extends AppCompatActivity {
 
     }
 
-    private void bottomsheetconfiguration() {
+    private void bottomsheetconfiguration(final Gain gainclicked) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(Dashboard.this, R.style.BottomSheetDialogTheme);
         final View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_bottom_sheet, (LinearLayout) findViewById(R.id.bottom_sheet_container));
 
         final NumberPicker day = (NumberPicker)bottomSheetView.findViewById(R.id.day_picker);
+        final EditText mDescription = (EditText) bottomSheetView.findViewById(R.id.et_description);
+        final EditText mValue = (EditText) bottomSheetView.findViewById(R.id.et_valeur);
         day.setFormatter(new NumberPicker.Formatter() {
             @Override
             public String format(int value) {
@@ -164,15 +187,21 @@ public class Dashboard extends AppCompatActivity {
         year.setMaxValue(2100);
 
         Calendar c = Calendar.getInstance();
-        day.setValue(c.get(Calendar.DAY_OF_MONTH));
-        month.setValue(c.get(Calendar.MONTH));
-        year.setValue(c.get(Calendar.YEAR));
+        if(edit) {
+            day.setValue(gainclicked.getDay());
+            month.setValue(gainclicked.getMonth());
+            year.setValue(gainclicked.getYear());
+            mDescription.setText(gainclicked.getDescription());
+            mValue.setText(String.valueOf(gainclicked.getGainValue()));
+        }else {
+            day.setValue(c.get(Calendar.DAY_OF_MONTH));
+            month.setValue(c.get(Calendar.MONTH));
+            year.setValue(c.get(Calendar.YEAR));
+        }
 
         bottomSheetView.findViewById(R.id.btn_valider).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText mDescription = (EditText) bottomSheetView.findViewById(R.id.et_description);
-                EditText mValue = (EditText) bottomSheetView.findViewById(R.id.et_valeur);
                 String description = mDescription.getText().toString().trim();
                 String value = mValue.getText().toString().trim();
                 if (description.isEmpty() || value.isEmpty()) {
@@ -181,7 +210,11 @@ public class Dashboard extends AppCompatActivity {
                 }
                 double nvalue = Double.valueOf(value);
                 Gain newGain = new Gain(nvalue, description, day.getValue(), month.getValue(),year.getValue(), "", currentLivret);
-                gainViewModel.insert(newGain);
+                if (edit) {
+                    gainViewModel.update(newGain);
+                }else{
+                    gainViewModel.insert(newGain);
+                }
                 bottomSheetDialog.dismiss();
             }
         });
