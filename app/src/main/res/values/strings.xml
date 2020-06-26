@@ -1,20 +1,32 @@
 <resources>
-    <string name="app_name">Mes Comptes</string>
-    <string name="account_creation_msg">Création de compte</string>
-    <string name="account_creation_txt">Vous n\'avez pas de compte ? Créez-en un</string>
-    <string name="et_username">Pseudonyme</string>
-    <string name="et_email">Adresse eMail</string>
-    <string name="et_password_one">Mot de Passe</string>
-    <string name="et_password_two">Vérification Mot de Passe</string>
+    <string name="app_name">Bank account</string>
+    <string name="account_creation_msg">Account creation</string>
+    <string name="account_creation_txt">You don\'t have any account ? Create one</string>
+    <string name="et_username">Username</string>
+    <string name="et_email">Email adress</string>
+    <string name="et_password_one">Password</string>
+    <string name="et_password_two">Password check</string>
     <string name="btn_connexion">Connexion</string>
-    <string name="btn_creation">Créer compte</string>
+    <string name="btn_creation">Create account</string>
 
-    <string name="not_existing_username">Cet utilisateur n\'existe pas</string>
-    <string name="password_error">Mauvais mot de passe</string>
-    <string name="empty_error">Ce champ ne peut pas être vide</string>
-    <string name="existing_username_error">Ce pseudonyme est déjà utilisé</string>
-    <string name="existing_email_error">Cette adresse eMail est déjà utilisée</string>
+    <string name="not_existing_username">This username doesn\'t exist</string>
+    <string name="password_error">Wrong password</string>
+    <string name="empty_error">This field can\'t be empty</string>
+    <string name="existing_username_error">This username is already used</string>
+    <string name="existing_email_error">This email adress is already used</string>
+    <string name="password_not_corresponding">Passwords doesn\'t match</string>
 
-    <string name="account_name">Donnez un nom à votre compte</string>
-    <string name="account_solde">Quel est le solde actuel ?</string>
+    <string name="give_account_name">Give a name to your account book</string>
+    <string name="account_solde">What is the current balance ?</string>
+    <string name="account_name">Account name</string>
+    <string name="next">Next</string>
+    <string name="current_solde">Current balance</string>
+    <string name="back">Previous</string>
+    <string name="description">Description</string>
+    <string name="valeur_indicate">Value ( indicate + or - )</string>
+    <string name="mensuel">Monthly</string>
+    <string name="jour">Day</string>
+    <string name="mois">Month</string>
+    <string name="annee">Year</string>
+    <string name="validate">Confirm</string>
 </resources>

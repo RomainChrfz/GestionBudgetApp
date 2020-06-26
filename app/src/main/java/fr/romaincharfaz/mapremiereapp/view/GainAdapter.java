@@ -7,6 +7,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -88,12 +89,14 @@ public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
         private TextView gain_txt;
         private TextView description;
         private TextView date;
+        private ImageView cat;
 
         public GainHolder(View itemView) {
             super(itemView);
             gain_txt = itemView.findViewById(R.id.txt_of_recycler);
             description = itemView.findViewById(R.id.recycler_description);
             date = itemView.findViewById(R.id.recycler_date);
+            cat = itemView.findViewById(R.id.recycler_category);
         }
     }
 }

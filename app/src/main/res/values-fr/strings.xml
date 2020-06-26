@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mes Comptes</string>
+    <string name="account_creation_msg">Création de compte</string>
+    <string name="account_creation_txt">Vous n\'avez pas de compte ? Créez-en un</string>
+    <string name="et_username">Pseudonyme</string>
+    <string name="et_email">Adresse eMail</string>
+    <string name="et_password_one">Mot de Passe</string>
+    <string name="et_password_two">Vérification Mot de Passe</string>
+    <string name="btn_connexion">Connection</string>
+    <string name="btn_creation">Créer compte</string>
+    <string name="not_existing_username">Cet utilisateur n\'existe pas</string>
+    <string name="password_error">Mauvais mot de passe</string>
+    <string name="empty_error">Ce champ ne peut pas être vide</string>
+    <string name="existing_username_error">Ce pseudonyme est déjà utilisé</string>
+    <string name="existing_email_error">Cette adresse eMail est déjà utilisée</string>
+    <string name="password_not_corresponding">Les mots de passe ne correspondent pas</string>
+    <string name="give_account_name">Donnez un nom à votre compte</string>
+    <string name="account_solde">Quel est le solde actuel ?</string>
+    <string name="account_name">Nom de compte</string>
+    <string name="next">Suivant</string>
+    <string name="current_solde">Solde actuel du compte</string>
+    <string name="back">Précédent</string>
+    <string name="description">Description</string>
+    <string name="valeur_indicate">Valeur ( indiquer + ou - )</string>
+    <string name="mensuel">Mensuel</string>
+    <string name="jour">Jour</string>
+    <string name="mois">Mois</string>
+    <string name="annee">Année</string>
+    <string name="validate">Valider</string>
+</resources>

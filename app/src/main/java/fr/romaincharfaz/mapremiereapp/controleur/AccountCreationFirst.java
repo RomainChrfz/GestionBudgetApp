@@ -89,7 +89,7 @@ public class AccountCreationFirst extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String inputUsername = mUsernameNew.getEditText().getText().toString().trim();
-                if (usernames.contains(inputUsername)) { mUsernameNew.setError("Ce Pseudonyme est déjà utilisé"); }
+                if (usernames.contains(inputUsername)) { mUsernameNew.setError(getString(R.string.existing_username_error)); }
                 else { mUsernameNew.setError(null); }
             }
 
@@ -104,7 +104,7 @@ public class AccountCreationFirst extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String inputEmail = mEmailAdress.getEditText().getText().toString().trim();
-                if (emailAdresses.contains(inputEmail)) { mEmailAdress.setError("Cette adresse eMail est déjà utilisée"); }
+                if (emailAdresses.contains(inputEmail)) { mEmailAdress.setError(getString(R.string.existing_email_error)); }
                 else { mEmailAdress.setError(null); }
             }
 
@@ -137,7 +137,7 @@ public class AccountCreationFirst extends AppCompatActivity {
                 String inputOne = mPasswordOne.getEditText().getText().toString().trim();
                 String inputTwo = mPasswordTwo.getEditText().getText().toString().trim();
                 if (!(inputOne.equals(inputTwo))) {
-                    mPasswordTwo.setError("Les mots de passe ne correspondent pas");
+                    mPasswordTwo.setError(getString(R.string.password_not_corresponding));
                 }else {
                     mPasswordTwo.setError(null);
                 }
@@ -161,10 +161,10 @@ public class AccountCreationFirst extends AppCompatActivity {
         String usernameInput = mUsernameNew.getEditText().getText().toString().trim();
 
         if (usernameInput.isEmpty()) {
-            mUsernameNew.setError("Ce champ ne peut pas être vide");
+            mUsernameNew.setError(getString(R.string.empty_error));
             return false;
         }else if (this.usernames.contains(usernameInput)) {
-            mUsernameNew.setError("Ce pseudonyme est déjà utilisé");
+            mUsernameNew.setError(getString(R.string.existing_username_error));
             return false;
         }else {
             mUsernameNew.setError(null);
@@ -176,10 +176,10 @@ public class AccountCreationFirst extends AppCompatActivity {
         String emailInput = mEmailAdress.getEditText().getText().toString().trim();
 
         if (emailInput.isEmpty()) {
-            mEmailAdress.setError("Ce champ ne peut pas être vide");
+            mEmailAdress.setError(getString(R.string.empty_error));
             return false;
         }else if (this.emailAdresses.contains(emailInput)) {
-            mEmailAdress.setError("Cette adresse eMail est déjà utilisée");
+            mEmailAdress.setError(getString(R.string.existing_email_error));
             return false;
         }else {
             mEmailAdress.setError(null);
@@ -191,7 +191,7 @@ public class AccountCreationFirst extends AppCompatActivity {
         String pwdInput = mPasswordOne.getEditText().getText().toString().trim();
 
         if (pwdInput.isEmpty()) {
-            mPasswordOne.setError("Ce champ ne peut pas être vide");
+            mPasswordOne.setError(getString(R.string.empty_error));
             return false;
         }else {
             mPasswordOne.setError(null);
@@ -204,10 +204,10 @@ public class AccountCreationFirst extends AppCompatActivity {
         String pwdInputTwo = mPasswordTwo.getEditText().getText().toString().trim();
 
         if (pwdInputTwo.isEmpty()) {
-            mPasswordTwo.setError("Ce champ ne peut pas être vide");
+            mPasswordTwo.setError(getString(R.string.empty_error));
             return false;
         }else if (!(pwdInputOne.equals(pwdInputTwo))) {
-            mPasswordTwo.setError("Les mots de passe ne correspondent pas");
+            mPasswordTwo.setError(getString(R.string.password_not_corresponding));
             return false;
         }else {
             mPasswordTwo.setError(null);

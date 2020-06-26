@@ -25,6 +25,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import fr.romaincharfaz.mapremiereapp.R;
 import fr.romaincharfaz.mapremiereapp.model.Gain;
@@ -71,19 +72,22 @@ public class MainActivity extends AppCompatActivity {
         mRandom = (TextView) findViewById(R.id.random_txt);
         mRandom2 = (TextView) findViewById(R.id.random2_txt);
 
-        String text = "Vous n\'avez pas de compte ? Créez-en un";
+        String text = getString(R.string.account_creation_txt);
         SpannableString ss = new SpannableString(text);
         ForegroundColorSpan fcsb = new ForegroundColorSpan(Color.BLACK);
-        ss.setSpan(fcsb, 0, 27, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
         ClickableSpan cs1 = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
                 openNewUserActivity();
             }
         };
-
-        ss.setSpan(cs1, 28, 39, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (Locale.getDefault().getLanguage().equals("fr")) {
+            ss.setSpan(fcsb,text.length()-11,text.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ss.setSpan(cs1, text.length()-11,text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }else{
+            ss.setSpan(fcsb, text.length()-10, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ss.setSpan(cs1, text.length()-10, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         mAccountCreation.setText(ss);
         mAccountCreation.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -116,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
         String passwordInput = mPassword.getEditText().getText().toString().trim();
         int indexer = usernames.indexOf(usernameInput);
         if (!(usernames.contains(usernameInput))) {
-            mUsername.setError("Cet utilisateur n'existe pas");
+            mUsername.setError(getString(R.string.not_existing_username));
             return;
         }else if (!(allmyusers.get(indexer).getPassword().equals(passwordInput))) {
             mUsername.setError(null);
-            Toast.makeText(MainActivity.this, "Mauvais mot de passe", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getString(R.string.password_error), Toast.LENGTH_SHORT).show();
             return;
         }
 
