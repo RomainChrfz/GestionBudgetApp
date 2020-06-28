@@ -10,6 +10,7 @@ import java.util.List;
 import fr.romaincharfaz.mapremiereapp.database.accountDatabase;
 import fr.romaincharfaz.mapremiereapp.database.dao.GainDao;
 import fr.romaincharfaz.mapremiereapp.model.Gain;
+import fr.romaincharfaz.mapremiereapp.model.Livret;
 
 public class GainRepository {
     private String username;
@@ -33,6 +34,8 @@ public class GainRepository {
     }
 
     // --- DELETE ---
+    public void deleteLivretGains(Livret livret) { new DeleteLivretAsyncGain(gainDao).execute(livret); }
+
     public void deleteGain(Gain gain) {
         new DeleteAsyncGain(gainDao).execute(gain);
     }
@@ -74,6 +77,20 @@ public class GainRepository {
         }
     }
 
+    private static class DeleteLivretAsyncGain extends AsyncTask<Livret, Void, Void> {
+        private GainDao gainDao;
+
+        private DeleteLivretAsyncGain(GainDao gainDao) {
+            this.gainDao = gainDao;
+        }
+
+        @Override
+        protected Void doInBackground(Livret... livrets) {
+            gainDao.deleteLivretGains(livrets[0].getName());
+            return null;
+        }
+    }
+
     private static class UpdateAsyncGain extends AsyncTask<Gain, Void, Void> {
         private GainDao gainDao;
 
@@ -101,7 +118,5 @@ public class GainRepository {
             return null;
         }
     }
-
-
 
 }

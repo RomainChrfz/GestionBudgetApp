@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import fr.romaincharfaz.mapremiereapp.model.Gain;
+import fr.romaincharfaz.mapremiereapp.model.Livret;
 import fr.romaincharfaz.mapremiereapp.model.User;
 import fr.romaincharfaz.mapremiereapp.repositories.GainRepository;
 import fr.romaincharfaz.mapremiereapp.repositories.UserRepository;
@@ -38,6 +39,8 @@ public class GainViewModel extends AndroidViewModel {
     public void update(Gain gain) { gainRepository.updateGain(gain); }
 
     public void delete(Gain gain) { gainRepository.deleteGain(gain); }
+
+    public void deleteLivret(Livret livret) { gainRepository.deleteLivretGains(livret); }
 
     public void deleteAllGains() { gainRepository.deleteAllGains(); }
 

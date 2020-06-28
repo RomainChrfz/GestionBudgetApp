@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/cat_base"
+        android:title="@string/cat_base"
+        android:icon="@drawable/ic_category_base" />
+
+    <item
+        android:id="@+id/cat_fuel"
+        android:title="@string/cat_fuel"
+        android:icon="@drawable/ic_cat_fuel" />
+
+</menu>

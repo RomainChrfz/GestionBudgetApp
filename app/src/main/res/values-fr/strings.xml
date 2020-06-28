@@ -39,4 +39,9 @@
     <string name="cat_transport_commun">Transports publics</string>
     <string name="cat_trip">Voyage</string>
     <string name="cat_base">Inconnu</string>
+    <string name="delete_account">Supprimer</string>
+    <string name="caution">Attention !</string>
+    <string name="caution_msg">Êtes-vous sûr de vouloir supprimer ce livret ?\nTout ce qui y est rattaché sera également supprimé…</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
 </resources>

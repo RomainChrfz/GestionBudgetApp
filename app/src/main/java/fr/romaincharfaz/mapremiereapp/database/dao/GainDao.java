@@ -29,6 +29,9 @@ public interface GainDao {
     @Query("DELETE FROM Gain WHERE id= :gainId")
     void deleteGain(long gainId);
 
+    @Query("DELETE FROM Gain WHERE userId= :userId")
+    void deleteLivretGains(String userId);
+
     @Query("DELETE FROM Gain")
     void deleteAllGains();
 }

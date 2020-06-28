@@ -38,4 +38,9 @@
     <string name="cat_transport_commun">Public transport</string>
     <string name="cat_trip">Trip</string>
     <string name="cat_base">Unknown</string>
+    <string name="delete_account">Delete account</string>
+    <string name="caution">Attention !</string>
+    <string name="caution_msg">Are you sure you want to delete this account ?\nEvery linked items will be deleted too…</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

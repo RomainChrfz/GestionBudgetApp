@@ -1,30 +1,44 @@
 package fr.romaincharfaz.mapremiereapp.controleur;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ListPopupWindow;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.romaincharfaz.mapremiereapp.CustomDeleteDialog;
 import fr.romaincharfaz.mapremiereapp.R;
 import fr.romaincharfaz.mapremiereapp.model.Livret;
+import fr.romaincharfaz.mapremiereapp.view.CategoryAdapter;
+import fr.romaincharfaz.mapremiereapp.view.CategoryItem;
+import fr.romaincharfaz.mapremiereapp.view.GainViewModel;
 import fr.romaincharfaz.mapremiereapp.view.LivretAdapter;
 import fr.romaincharfaz.mapremiereapp.view.LivretViewModel;
 
-public class PreDashboard extends AppCompatActivity {
+public class PreDashboard extends AppCompatActivity implements CustomDeleteDialog.CustomDeleteDialogListener {
 
     private String currentUser;
     private LivretViewModel livretViewModel;
+    private GainViewModel gainViewModel;
+    private ArrayList<CategoryItem> mCategoryList;
+    private Livret deletedLivret;
 
     private Button creer;
 
@@ -41,6 +55,8 @@ public class PreDashboard extends AppCompatActivity {
 
         final LivretAdapter adapter = new LivretAdapter();
         recyclerView.setAdapter(adapter);
+
+        gainViewModel = new ViewModelProvider(this).get(GainViewModel.class);
 
         livretViewModel = new ViewModelProvider(this).get(LivretViewModel.class);
         livretViewModel.getUserLivrets(currentUser).observe(this, new Observer<List<Livret>>() {
@@ -60,12 +76,78 @@ public class PreDashboard extends AppCompatActivity {
             }
         });
 
+        adapter.setOnItemLongClickListener(new LivretAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(int position, View view) {
+                deletedLivret = adapter.getLivretAt(position);
+                showPopup(view);
+            }
+        });
+
+
+    }
+
+    private void showPopup(View view) {
+
+        //ListPopupWindow listPopupWindow = new ListPopupWindow(this);
+        //initList();
+        //CategoryAdapter adapter = new CategoryAdapter(this, mCategoryList);
+        //listPopupWindow.setAdapter(adapter);
+        //listPopupWindow.setAnchorView(view);
+        //listPopupWindow.setBackgroundDrawable(getDrawable(R.drawable.custom_spinner));
+        //listPopupWindow.setContentWidth(600);
+        //listPopupWindow.show();
+
+        PopupMenu popupMenu = new PopupMenu(this,view);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.delete_livret :
+                        openDialog();
+                        return true;
+                    default :
+                        return false;
+                }
+            }
+        });
+        popupMenu.inflate(R.menu.livret_long_click_menu);
+        popupMenu.show();
+    }
+
+    private void openDialog() {
+        CustomDeleteDialog dialog = new CustomDeleteDialog();
+        dialog.show(getSupportFragmentManager(),"Caution dialog");
     }
 
     private void addLivret() {
         Intent intent = new Intent(PreDashboard.this,CreationStepOne.class);
         intent.putExtra(MainActivity.CURRENT_USER, currentUser);
         startActivity(intent);
+    }
+
+    private void initList() {
+        mCategoryList = new ArrayList<>();
+        mCategoryList.add(new CategoryItem(getString(R.string.cat_base), R.drawable.ic_cat_unknown));
+        mCategoryList.add(new CategoryItem(getString(R.string.cat_courses), R.drawable.ic_cat_courses));
+        mCategoryList.add(new CategoryItem(getString(R.string.cat_fuel), R.drawable.ic_cat_fuel));
+        mCategoryList.add(new CategoryItem(getString(R.string.cat_gift), R.drawable.ic_cat_gift));
+        mCategoryList.add(new CategoryItem(getString(R.string.cat_phone), R.drawable.ic_cat_phone));
+        mCategoryList.add(new CategoryItem(getString(R.string.cat_transport_commun), R.drawable.ic_cat_transport_commun));
+        mCategoryList.add(new CategoryItem(getString(R.string.cat_trip), R.drawable.ic_cat_trip));
+    }
+
+    @Override
+    public void onYesClicked() {
+        try {
+            gainViewModel.deleteLivret(deletedLivret);
+            livretViewModel.delete(deletedLivret);
+        }catch (Exception e) {Toast.makeText(this,e.toString(),Toast.LENGTH_LONG).show();}
+    }
+
+    @Override
+    public void onNoClicked() {
+        Toast.makeText(this,"Aucune suppression effectuée",Toast.LENGTH_SHORT).show();
     }
 
     @Override

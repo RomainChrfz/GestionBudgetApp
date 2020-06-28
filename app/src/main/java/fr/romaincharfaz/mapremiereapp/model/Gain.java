@@ -14,17 +14,19 @@ public class Gain {
     private int day;
     private int month;
     private int year;
+    private int category;
     private String urlJustif;
     private String userId;
 
     //public Gain() { }
 
-    public Gain(double gainValue, String description, int day, int month, int year, String urlJustif, String userId) {
+    public Gain(double gainValue, String description, int day, int month, int year, int category, String urlJustif, String userId) {
         this.gainValue = gainValue;
         this.description = description;
         this.day = day;
         this.month = month;
         this.year = year;
+        this.category = category;
         this.urlJustif = urlJustif;
         this.userId = userId;
     }
@@ -37,6 +39,7 @@ public class Gain {
     public int getDay() { return day; }
     public int getMonth() { return month; }
     public int getYear() { return year; }
+    public int getCategory() { return category; }
     public String getUrlJustif() { return urlJustif; }
     public String getUserId() { return userId; }
 
@@ -48,6 +51,7 @@ public class Gain {
     public void setDay(int day) { this.day = day; }
     public void setMonth(int month) { this.month = month; }
     public void setYear(int year) { this.year = year; }
+    public void setCategory(int category) { this.category = category; }
     public void setUrlJustif(String urlJustif) { this.urlJustif = urlJustif; }
     public void setUserId(String userId) { this.userId = userId; }
 

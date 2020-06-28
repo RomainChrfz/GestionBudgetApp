@@ -33,6 +33,7 @@ import static java.lang.String.valueOf;
 
 public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
     private OnItemClickListener mListener;
+    private int[] mCategoryList;
 
 
     public GainAdapter() {
@@ -41,7 +42,7 @@ public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
 
     public interface OnItemClickListener {
         void OnItemClick(int position);
-        void OnCatClick(int position);
+        void OnCatClick(int position, View view);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -57,7 +58,12 @@ public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
         @Override
         public boolean areContentsTheSame(@NonNull Gain oldItem, @NonNull Gain newItem) {
             return newItem.getGainValue() == oldItem.getGainValue() &&
-                    newItem.getDescription().equals(oldItem.getDescription());
+                    newItem.getDescription().equals(oldItem.getDescription()) &&
+                    newItem.getDay() == oldItem.getDay() &&
+                    newItem.getMonth() == oldItem.getMonth() &&
+                    newItem.getYear() == oldItem.getYear() &&
+                    newItem.getCategory() == oldItem.getCategory() &&
+                    newItem.getUrlJustif().equals(oldItem.getUrlJustif());
         }
     };
 
@@ -96,6 +102,8 @@ public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
         c.set(Calendar.DAY_OF_MONTH,nday);
         String date = DateFormat.getDateInstance().format(c.getTime());
         holder.date.setText(date);
+        initList();
+        holder.cat.setImageResource(mCategoryList[currentGain.getCategory()]);
     }
 
     public Gain getGainAt(int position) {
@@ -106,7 +114,7 @@ public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
         private TextView gain_txt;
         private TextView description;
         private TextView date;
-        private Spinner cat;
+        private ImageView cat;
         private ArrayList<CategoryItem> mCategoryList;
         private fr.romaincharfaz.mapremiereapp.view.CategoryAdapter mAdapter;
 
@@ -115,14 +123,7 @@ public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
             gain_txt = itemView.findViewById(R.id.txt_of_recycler);
             description = itemView.findViewById(R.id.recycler_description);
             date = itemView.findViewById(R.id.recycler_date);
-//            mCategoryList = new ArrayList<>();
-//            mCategoryList.add(new CategoryItem(Resources.getSystem().getString(R.string.cat_base), R.drawable.ic_category_base));
-//            mCategoryList.add(new CategoryItem(Resources.getSystem().getString(R.string.cat_courses), R.drawable.ic_cat_courses));
-//            mCategoryList.add(new CategoryItem(Resources.getSystem().getString(R.string.cat_fuel), R.drawable.ic_cat_fuel));
-//            mCategoryList.add(new CategoryItem(Resources.getSystem().getString(R.string.cat_gift), R.drawable.ic_cat_gift));
-//            mCategoryList.add(new CategoryItem(Resources.getSystem().getString(R.string.cat_phone), R.drawable.ic_cat_phone));
-//            mCategoryList.add(new CategoryItem(Resources.getSystem().getString(R.string.cat_transport_commun), R.drawable.ic_cat_transport_commun));
-//            mCategoryList.add(new CategoryItem(Resources.getSystem().getString(R.string.cat_trip), R.drawable.ic_cat_trip));
+            cat = itemView.findViewById(R.id.recycler_category);
 //
 //            Spinner spinnerCategory = itemView.findViewById(R.id.recycler_category);
 //
@@ -156,17 +157,28 @@ public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
                 }
             });
 
-//            cat.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (listener != null) {
-//                        int position = getAdapterPosition();
-//                        if (position != RecyclerView.NO_POSITION) {
-//                            listener.OnCatClick(position);
-//                        }
-//                    }
-//                }
-//            });
+            cat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.OnCatClick(position,v);
+                        }
+                    }
+                }
+            });
         }
+    }
+
+    private void initList() {
+        mCategoryList = new int[7];
+        mCategoryList[0] = R.drawable.ic_cat_unknown;
+        mCategoryList[1] = R.drawable.ic_cat_courses;
+        mCategoryList[2] = R.drawable.ic_cat_fuel;
+        mCategoryList[3] = R.drawable.ic_cat_gift;
+        mCategoryList[4] = R.drawable.ic_cat_phone;
+        mCategoryList[5] = R.drawable.ic_cat_transport_commun;
+        mCategoryList[6] = R.drawable.ic_cat_trip;
     }
 }

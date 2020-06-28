@@ -13,7 +13,7 @@ import fr.romaincharfaz.mapremiereapp.model.Gain;
 import fr.romaincharfaz.mapremiereapp.model.Livret;
 import fr.romaincharfaz.mapremiereapp.model.User;
 
-@Database(entities = {Gain.class , Livret.class, User.class}, version = 6, exportSchema = false)
+@Database(entities = {Gain.class , Livret.class, User.class}, version = 7, exportSchema = false)
 public abstract class accountDatabase extends RoomDatabase {
 
     // --- SINGLETON ---
