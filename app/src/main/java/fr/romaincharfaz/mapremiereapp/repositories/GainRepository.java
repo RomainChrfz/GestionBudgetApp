@@ -13,15 +13,11 @@ import fr.romaincharfaz.mapremiereapp.model.Gain;
 import fr.romaincharfaz.mapremiereapp.model.Livret;
 
 public class GainRepository {
-    private String username;
-    private long id;
     private GainDao gainDao;
-    private LiveData<List<Gain>> allGains;
 
     public GainRepository(Application application) {
         accountDatabase database = accountDatabase.getInstance(application);
         gainDao = database.gainDao();
-        allGains = gainDao.getLiveGains(id,username);
     }
 
     // --- GET ---

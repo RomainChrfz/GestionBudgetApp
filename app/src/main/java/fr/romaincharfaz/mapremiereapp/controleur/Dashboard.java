@@ -1,7 +1,6 @@
 package fr.romaincharfaz.mapremiereapp.controleur;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ListPopupWindow;
 import androidx.core.content.ContextCompat;
@@ -25,7 +24,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,25 +44,21 @@ import fr.romaincharfaz.mapremiereapp.view.GainViewModel;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class Dashboard extends AppCompatActivity {
-    public static final String CURRENT_LIVRET = "fr.romaincharfaz.mapremiereapp.controleur.Dashboard.CURRENT_LIVRET";;
+    public static final String CURRENT_LIVRET = "fr.romaincharfaz.mapremiereapp.controleur.Dashboard.CURRENT_LIVRET";
     public static final String CURRENT_LIVRET_NAME = "fr.romaincharfaz.mapremiereapp.controleur.Dashboard.CURRENT_LIVRET_NAME";
     public static final String CURRENT_USER = "fr.romaincharfaz.mapremiereapp.controleur.Dashboard.CURRENT_USER";
 
     private GainViewModel gainViewModel;
 
     private ArrayList<CategoryItem> mCategoryList;
-    private CategoryAdapter mAdapter;
 
     public static boolean edit;
     public static int categoryselected = 0;
     private Gain deletedGain;
     private Gain modifiedGain;
     private long currentLivret;
-    private String currentLivretName;
     private String currentUser;
-    private String testtxt = new String();
 
-    private FloatingActionButton mAddBtn;
     private TextView total_txt;
 
     @Override
@@ -78,7 +72,7 @@ public class Dashboard extends AppCompatActivity {
         Intent intent = getIntent();
         currentUser = intent.getStringExtra(CURRENT_USER);
         currentLivret = intent.getLongExtra(CURRENT_LIVRET,-1);
-        currentLivretName = intent.getStringExtra(CURRENT_LIVRET_NAME);
+        String currentLivretName = intent.getStringExtra(CURRENT_LIVRET_NAME);
         setTitle(currentLivretName);
 
         try{
@@ -90,7 +84,7 @@ public class Dashboard extends AppCompatActivity {
 
         total_txt = (TextView) findViewById(R.id.total_txt);
 
-        mAddBtn = findViewById(R.id.btn_add_gain);
+        FloatingActionButton mAddBtn = findViewById(R.id.btn_add_gain);
         mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -254,7 +248,7 @@ public class Dashboard extends AppCompatActivity {
                     Toast.makeText(Dashboard.this,"Ces champs ne peuvent pas être vide",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                double nvalue = Double.valueOf(value);
+                double nvalue = Double.parseDouble(value);
                 Gain newGain = new Gain(nvalue, description, day.getValue(), month.getValue(),year.getValue(),categoryselected, "", currentLivret,currentUser);
                 if (edit) {
                     newGain.setId(gainclicked.getId());
@@ -272,7 +266,7 @@ public class Dashboard extends AppCompatActivity {
     private void total_calcul(List<Gain> totgain) {
         double tot = 0.0;
         for (int i=0; i<totgain.size(); i++) {
-            tot += Double.valueOf(totgain.get(i).getGainValue());
+            tot += totgain.get(i).getGainValue();
         }
         tot = Math.round(tot * 100d) / 100d;
         String tot_ss = String.valueOf(tot);

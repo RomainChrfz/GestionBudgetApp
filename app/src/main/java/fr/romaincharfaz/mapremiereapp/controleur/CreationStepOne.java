@@ -20,15 +20,12 @@ import fr.romaincharfaz.mapremiereapp.view.LivretViewModel;
 
 public class CreationStepOne extends AppCompatActivity {
     public static final String ACCOUNT_NAME = "fr.romaincharfaz.mapremiereapp.controler.CreationStepOne.ACCOUNT_NAME";
-    public static final String CURRENT_USER_ = "fr.romaincharfaz.mapremiereapp.controler.CreationStepOne.CURENT_USER_";
 
     private String currentUser;
     private String string;
-    private LivretViewModel livretViewModel;
     private ArrayList<String> livretNames;
 
     private EditText accountName;
-    private TextView nextOne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +36,13 @@ public class CreationStepOne extends AppCompatActivity {
         currentUser = intent.getStringExtra(MainActivity.CURRENT_USER);
 
         accountName = (EditText) findViewById(R.id.et_nom_compte);
-        nextOne = (TextView) findViewById(R.id.btn_next_one);
+        TextView nextOne = (TextView) findViewById(R.id.btn_next_one);
 
-        livretViewModel = new ViewModelProvider(this).get(LivretViewModel.class);
+        LivretViewModel livretViewModel = new ViewModelProvider(this).get(LivretViewModel.class);
         livretViewModel.getUserLivrets(currentUser).observe(this, new Observer<List<Livret>>() {
             @Override
             public void onChanged(List<Livret> livrets) {
-                livretNames = new ArrayList<String>();
+                livretNames = new ArrayList<>();
                 for (int i=0; i<livrets.size(); i++) {
                     livretNames.add(livrets.get(i).getName());
                 }

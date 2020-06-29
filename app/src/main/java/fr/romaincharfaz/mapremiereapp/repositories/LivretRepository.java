@@ -8,22 +8,15 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import fr.romaincharfaz.mapremiereapp.database.accountDatabase;
-import fr.romaincharfaz.mapremiereapp.database.dao.GainDao;
 import fr.romaincharfaz.mapremiereapp.database.dao.LivretDao;
-import fr.romaincharfaz.mapremiereapp.model.Gain;
 import fr.romaincharfaz.mapremiereapp.model.Livret;
 
 public class LivretRepository {
-    //private String username;
-    //private GainDao gainDao;
-    //private LiveData<List<Gain>> allGains;
     private LivretDao livretDao;
-    private LiveData<List<Livret>> allLivrets;
 
     public LivretRepository(Application application) {
         accountDatabase database = accountDatabase.getInstance(application);
         livretDao = database.livretDao();
-        allLivrets = livretDao.getLivrets();
     }
 
     // --- GET ---

@@ -2,14 +2,12 @@ package fr.romaincharfaz.mapremiereapp.controleur;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -17,12 +15,9 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.app.Application;
-import android.content.res.Resources;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -31,9 +26,7 @@ import java.util.List;
 import java.util.Locale;
 
 import fr.romaincharfaz.mapremiereapp.R;
-import fr.romaincharfaz.mapremiereapp.model.Gain;
 import fr.romaincharfaz.mapremiereapp.model.User;
-import fr.romaincharfaz.mapremiereapp.view.GainViewModel;
 import fr.romaincharfaz.mapremiereapp.view.UserViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     private TextInputLayout mUsername;
     private TextInputLayout mPassword;
-    private Button mLoginBtn;
-    private TextView mAccountCreation;
 
     private TextView mRandom;
     private TextView mRandom2;
@@ -54,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private String random2;
 
     private UserViewModel userViewModel;
-    private List<String> usernames = new ArrayList<String>();
-    private List<String> passwords = new ArrayList<String>();
-    private List<User> allmyusers = new ArrayList<User>();
+    private List<String> usernames = new ArrayList<>();
+    private List<String> passwords = new ArrayList<>();
+    private List<User> allmyusers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
         mUsername = (TextInputLayout) findViewById(R.id.username);
         mPassword = (TextInputLayout) findViewById(R.id.password);
-        mLoginBtn = (Button) findViewById(R.id.login_btn);
-        mAccountCreation = (TextView) findViewById(R.id.account_creation);
+        Button mLoginBtn = (Button) findViewById(R.id.login_btn);
+        TextView mAccountCreation = (TextView) findViewById(R.id.account_creation);
 
         mRandom = (TextView) findViewById(R.id.random_txt);
         mRandom2 = (TextView) findViewById(R.id.random2_txt);
@@ -101,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<User> users) {
                 allmyusers = users;
-                random = new String();
-                random2 = new String();
+                random = "";
+                random2 = "";
                 usernames = new ArrayList<>();
                 for (int i=0 ; i<users.size() ; i++) {
                     usernames.add(users.get(i).getUsername());

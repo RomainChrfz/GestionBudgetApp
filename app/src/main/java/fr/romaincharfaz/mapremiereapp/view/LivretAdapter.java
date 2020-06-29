@@ -1,14 +1,9 @@
 package fr.romaincharfaz.mapremiereapp.view;
 
-import android.graphics.Color;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.romaincharfaz.mapremiereapp.R;
-import fr.romaincharfaz.mapremiereapp.model.Gain;
 import fr.romaincharfaz.mapremiereapp.model.Livret;
 
 public class LivretAdapter extends RecyclerView.Adapter<LivretAdapter.LivretHolder> {
@@ -71,9 +65,8 @@ public class LivretAdapter extends RecyclerView.Adapter<LivretAdapter.LivretHold
                 public boolean onLongClick(View v) {
                     if (listener2 != null) {
                         int position = getAdapterPosition();
-                        View view = v;
                         if (position != RecyclerView.NO_POSITION) {
-                            listener2.onItemLongClick(position, view);
+                            listener2.onItemLongClick(position, v);
                         }
                     }
                     return true;

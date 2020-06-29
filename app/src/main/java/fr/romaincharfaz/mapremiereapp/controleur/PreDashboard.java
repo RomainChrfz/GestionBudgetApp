@@ -14,16 +14,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.romaincharfaz.mapremiereapp.view.CustomDeleteDialog;
 import fr.romaincharfaz.mapremiereapp.R;
 import fr.romaincharfaz.mapremiereapp.model.Livret;
-import fr.romaincharfaz.mapremiereapp.view.CategoryItem;
 import fr.romaincharfaz.mapremiereapp.view.GainViewModel;
 import fr.romaincharfaz.mapremiereapp.view.LivretAdapter;
 import fr.romaincharfaz.mapremiereapp.view.LivretViewModel;
@@ -33,10 +30,7 @@ public class PreDashboard extends AppCompatActivity implements CustomDeleteDialo
     private String currentUser;
     private LivretViewModel livretViewModel;
     private GainViewModel gainViewModel;
-    private ArrayList<CategoryItem> mCategoryList;
     private Livret deletedLivret;
-
-    private Button creer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

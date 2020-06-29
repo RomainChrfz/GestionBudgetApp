@@ -3,13 +3,10 @@ package fr.romaincharfaz.mapremiereapp.view;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import fr.romaincharfaz.mapremiereapp.model.User;
 import fr.romaincharfaz.mapremiereapp.repositories.UserRepository;

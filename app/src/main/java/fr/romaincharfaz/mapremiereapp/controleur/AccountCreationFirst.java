@@ -1,22 +1,15 @@
 package fr.romaincharfaz.mapremiereapp.controleur;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -34,21 +27,13 @@ public class AccountCreationFirst extends AppCompatActivity {
     public static final String EMAIL = "fr.romaincharfaz.mapremiereapp.controleur.AccountCreationFirst.EMAIL";
     public static final String URL = "fr.romaincharfaz.mapremiereapp.controleur.AccountCreationFirst.URL";
 
-    private TextView mWelcomeText;
     private TextInputLayout mUsernameNew;
     private TextInputLayout mPasswordOne;
     private TextInputLayout mPasswordTwo;
     private TextInputLayout mEmailAdress;
-    private TextInputEditText mUsernametxt;
-    private TextInputEditText mEmailAdresstxt;
-    private TextInputEditText mPasswordTwotxt;
-    private TextInputEditText mPasswordOnetxt;
-    private Button mCreationButton;
 
-    private List<String> usernames = new ArrayList<String>();
-    private List<String> emailAdresses = new ArrayList<String>();
-
-    private UserViewModel userViewModel;
+    private List<String> usernames = new ArrayList<>();
+    private List<String> emailAdresses = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +47,7 @@ public class AccountCreationFirst extends AppCompatActivity {
         // --- SETTING THE CONTENT VIEW ---
         setContentView(R.layout.activity_account_creation_first);
 
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         userViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
@@ -74,16 +59,15 @@ public class AccountCreationFirst extends AppCompatActivity {
             }
         });
 
-        mWelcomeText = (TextView) findViewById(R.id.welcome_msg);
         mUsernameNew = (TextInputLayout) findViewById(R.id.username_new);
         mEmailAdress = (TextInputLayout) findViewById(R.id.email_et);
         mPasswordOne = (TextInputLayout) findViewById(R.id.password_one);
         mPasswordTwo = (TextInputLayout) findViewById(R.id.password_two);
-        mUsernametxt = (TextInputEditText) findViewById(R.id.username_txt);
-        mEmailAdresstxt = (TextInputEditText) findViewById(R.id.email_txt);
-        mPasswordTwotxt = (TextInputEditText) findViewById(R.id.password_two_txt);
-        mPasswordOnetxt = (TextInputEditText) findViewById(R.id.password_one_txt);
-        mCreationButton = (Button) findViewById(R.id.creation_btn);
+        TextInputEditText mUsernametxt = (TextInputEditText) findViewById(R.id.username_txt);
+        TextInputEditText mEmailAdresstxt = (TextInputEditText) findViewById(R.id.email_txt);
+        TextInputEditText mPasswordTwotxt = (TextInputEditText) findViewById(R.id.password_two_txt);
+        TextInputEditText mPasswordOnetxt = (TextInputEditText) findViewById(R.id.password_one_txt);
+        Button mCreationButton = (Button) findViewById(R.id.creation_btn);
 
         mUsernametxt.addTextChangedListener(new TextWatcher() {
             @Override

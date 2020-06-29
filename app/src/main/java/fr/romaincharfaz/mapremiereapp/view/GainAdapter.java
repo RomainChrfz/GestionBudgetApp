@@ -7,29 +7,19 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.content.res.Resources;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import fr.romaincharfaz.mapremiereapp.R;
-import fr.romaincharfaz.mapremiereapp.controleur.Dashboard;
 import fr.romaincharfaz.mapremiereapp.model.Gain;
-
-import static java.lang.String.valueOf;
 
 public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
     private OnItemClickListener mListener;
@@ -115,8 +105,6 @@ public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
         private TextView description;
         private TextView date;
         private ImageView cat;
-        private ArrayList<CategoryItem> mCategoryList;
-        private fr.romaincharfaz.mapremiereapp.view.CategoryAdapter mAdapter;
 
         public GainHolder(final View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -124,26 +112,6 @@ public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
             description = itemView.findViewById(R.id.recycler_description);
             date = itemView.findViewById(R.id.recycler_date);
             cat = itemView.findViewById(R.id.recycler_category);
-//
-//            Spinner spinnerCategory = itemView.findViewById(R.id.recycler_category);
-//
-//            mAdapter = new fr.romaincharfaz.mapremiereapp.view.CategoryAdapter(itemView.getContext(), mCategoryList);
-//            spinnerCategory.setAdapter(mAdapter);
-//
-//            spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                @Override
-//                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                    CategoryItem clickedItem = (CategoryItem) parent.getItemAtPosition(position);
-//                    String categoryName = clickedItem.getCategoryName();
-//                    Toast.makeText(itemView.getContext(), categoryName, Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onNothingSelected(AdapterView<?> parent) {
-//
-//                }
-//            });
-
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

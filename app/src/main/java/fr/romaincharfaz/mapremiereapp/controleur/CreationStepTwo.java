@@ -21,23 +21,16 @@ import fr.romaincharfaz.mapremiereapp.view.LivretViewModel;
 import fr.romaincharfaz.mapremiereapp.view.UserViewModel;
 
 public class CreationStepTwo extends AppCompatActivity {
-    public static final String ACCOUNT_NAME_ = "fr.romaincharfaz.mapremiereapp.controler.CreationStepTwo.ACCOUNT_NAME_";
-    public static final String ACCOUNT_SOLDE = "fr.romaincharfaz.mapremiereapp.controler.CreationStepTwo.ACCOUNT_SOLDE";
-    public static final String CURRENT_USER__ = "fr.romaincharfaz.mapremiereapp.controler.CreationStepTwo.CURRENT_USER__";
-
     private String Name;
     private String Solde;
-    private  String currentUser;
+    private String currentUser;
 
     private EditText accountSolde;
-    private TextView nextTwo;
-    private TextView prevTwo;
 
     private UserViewModel userViewModel;
     private LivretViewModel livretViewModel;
-    private List<User> allmyusers;
     private int indexer;
-    private List<String> usernames = new ArrayList<String>();
+    private List<String> usernames = new ArrayList<>();
     private User updater;
 
     @Override
@@ -53,7 +46,6 @@ public class CreationStepTwo extends AppCompatActivity {
         userViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
-                allmyusers = users;
                 for (int i=0; i<users.size(); i++) {
                     usernames.add(users.get(i).getUsername());
                 }
@@ -65,8 +57,8 @@ public class CreationStepTwo extends AppCompatActivity {
         livretViewModel = new ViewModelProvider(this).get(LivretViewModel.class);
 
         accountSolde = (EditText) findViewById(R.id.et_solde_compte);
-        nextTwo = (TextView) findViewById(R.id.btn_next_two);
-        prevTwo = (TextView) findViewById(R.id.btn_prev_two);
+        TextView nextTwo = (TextView) findViewById(R.id.btn_next_two);
+        TextView prevTwo = (TextView) findViewById(R.id.btn_prev_two);
 
         nextTwo.setOnClickListener(new View.OnClickListener() {
             @Override
