@@ -46,7 +46,8 @@ import fr.romaincharfaz.mapremiereapp.view.GainViewModel;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class Dashboard extends AppCompatActivity {
-    public static final String CURRENT_LIVRET = "fr.romaincharfaz.mapremiereapp.controleur.Dashboard.CURRENT_LIVRET";
+    public static final String CURRENT_LIVRET = "fr.romaincharfaz.mapremiereapp.controleur.Dashboard.CURRENT_LIVRET";;
+    public static final String CURRENT_LIVRET_NAME = "fr.romaincharfaz.mapremiereapp.controleur.Dashboard.CURRENT_LIVRET_NAME";
     public static final String CURRENT_USER = "fr.romaincharfaz.mapremiereapp.controleur.Dashboard.CURRENT_USER";
 
     private GainViewModel gainViewModel;
@@ -58,14 +59,14 @@ public class Dashboard extends AppCompatActivity {
     public static int categoryselected = 0;
     private Gain deletedGain;
     private Gain modifiedGain;
-    private String currentLivret;
+    private long currentLivret;
+    private String currentLivretName;
     private String currentUser;
     private String testtxt = new String();
 
     private FloatingActionButton mAddBtn;
     private TextView total_txt;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +77,10 @@ public class Dashboard extends AppCompatActivity {
 
         Intent intent = getIntent();
         currentUser = intent.getStringExtra(CURRENT_USER);
-        currentLivret = intent.getStringExtra(CURRENT_LIVRET);
-        setTitle(currentLivret);
+        currentLivret = intent.getLongExtra(CURRENT_LIVRET,-1);
+        currentLivretName = intent.getStringExtra(CURRENT_LIVRET_NAME);
+        setTitle(currentLivretName);
+
         try{
             initList();
         }catch(Exception e){
@@ -92,7 +95,7 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 edit = false;
-                Gain gainclicked = new Gain(0.0,"",0,0,0,0,"","");
+                Gain gainclicked = new Gain(0.0,"",0,0,0,0,"",0,"");
                 bottomsheetconfiguration(gainclicked);
             }
         });
@@ -120,7 +123,7 @@ public class Dashboard extends AppCompatActivity {
         });
 
         gainViewModel = new ViewModelProvider(Dashboard.this).get(GainViewModel.class);
-        gainViewModel.getAllGains(currentLivret).observe(this, new Observer<List<Gain>>() {
+        gainViewModel.getAllGains(currentLivret,currentUser).observe(this, new Observer<List<Gain>>() {
             @Override
             public void onChanged(List<Gain> gains) {
                 adapter.submitList(gains);
@@ -166,20 +169,22 @@ public class Dashboard extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void showPopup(View view) {
         final ListPopupWindow listPopupWindow = new ListPopupWindow(this);
         initList();
         CategoryAdapter mAdapter = new CategoryAdapter(this, mCategoryList);
         listPopupWindow.setAdapter(mAdapter);
         listPopupWindow.setAnchorView(view);
-        listPopupWindow.setBackgroundDrawable(getDrawable(R.drawable.custom_spinner));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            listPopupWindow.setBackgroundDrawable(getDrawable(R.drawable.custom_spinner));
+        }
         listPopupWindow.setContentWidth(800);
         listPopupWindow.setModal(true);
         listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Gain gain = new Gain(modifiedGain.getGainValue(),modifiedGain.getDescription(),modifiedGain.getDay(),modifiedGain.getMonth(),modifiedGain.getYear(),position,modifiedGain.getUrlJustif(),modifiedGain.getUserId());
+                Gain gain = new Gain(modifiedGain.getGainValue(),modifiedGain.getDescription(),modifiedGain.getDay(),modifiedGain.getMonth(),modifiedGain.getYear(),position,modifiedGain.getUrlJustif(),modifiedGain.getUserId(),modifiedGain.getUsernameId());
                 gain.setId(modifiedGain.getId());
                 gainViewModel.update(gain);
                 listPopupWindow.dismiss();
@@ -197,6 +202,9 @@ public class Dashboard extends AppCompatActivity {
        mCategoryList.add(new CategoryItem(getString(R.string.cat_phone), R.drawable.ic_cat_phone));
        mCategoryList.add(new CategoryItem(getString(R.string.cat_transport_commun), R.drawable.ic_cat_transport_commun));
        mCategoryList.add(new CategoryItem(getString(R.string.cat_trip), R.drawable.ic_cat_trip));
+       mCategoryList.add(new CategoryItem(getString(R.string.cat_diy), R.drawable.ic_cat_diy));
+       mCategoryList.add(new CategoryItem(getString(R.string.cat_cinema), R.drawable.ic_cat_cinema));
+       mCategoryList.add(new CategoryItem(getString(R.string.cat_restaurant), R.drawable.ic_cat_restaurant));
    }
 
     private void bottomsheetconfiguration(final Gain gainclicked) {
@@ -247,7 +255,7 @@ public class Dashboard extends AppCompatActivity {
                     return;
                 }
                 double nvalue = Double.valueOf(value);
-                Gain newGain = new Gain(nvalue, description, day.getValue(), month.getValue(),year.getValue(),categoryselected, "", currentLivret);
+                Gain newGain = new Gain(nvalue, description, day.getValue(), month.getValue(),year.getValue(),categoryselected, "", currentLivret,currentUser);
                 if (edit) {
                     newGain.setId(gainclicked.getId());
                     gainViewModel.update(newGain);

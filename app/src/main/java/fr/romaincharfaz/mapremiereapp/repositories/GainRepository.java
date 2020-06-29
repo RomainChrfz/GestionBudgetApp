@@ -14,19 +14,20 @@ import fr.romaincharfaz.mapremiereapp.model.Livret;
 
 public class GainRepository {
     private String username;
+    private long id;
     private GainDao gainDao;
     private LiveData<List<Gain>> allGains;
 
     public GainRepository(Application application) {
         accountDatabase database = accountDatabase.getInstance(application);
         gainDao = database.gainDao();
-        allGains = gainDao.getLiveGains(username);
+        allGains = gainDao.getLiveGains(id,username);
     }
 
     // --- GET ---
-    public LiveData<List<Gain>> getLiveGains(String userId) { return this.gainDao.getLiveGains(userId); }
+    public LiveData<List<Gain>> getLiveGains(long userId, String usernameId) { return this.gainDao.getLiveGains(userId, usernameId); }
 
-    public List<Gain> getGains(String userId) { return this.gainDao.getGains(userId); }
+    public List<Gain> getGains(long userId, String usernameId) { return this.gainDao.getGains(userId, usernameId); }
 
     // --- CREATE ---
     public void createGain(Gain gain) {
@@ -86,7 +87,7 @@ public class GainRepository {
 
         @Override
         protected Void doInBackground(Livret... livrets) {
-            gainDao.deleteLivretGains(livrets[0].getName());
+            gainDao.deleteLivretGains(livrets[0].getId(), livrets[0].getUserId());
             return null;
         }
     }

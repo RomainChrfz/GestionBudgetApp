@@ -14,11 +14,11 @@ import fr.romaincharfaz.mapremiereapp.model.Gain;
 @Dao
 public interface GainDao {
 
-    @Query("SELECT * FROM Gain WHERE userId= :userId")
-    LiveData<List<Gain>> getLiveGains(String userId);
+    @Query("SELECT * FROM Gain WHERE userId= :userId AND usernameId= :usernameId")
+    LiveData<List<Gain>> getLiveGains(long userId, String usernameId);
 
-    @Query("SELECT * FROM Gain WHERE userId= :userId")
-    List<Gain> getGains(String userId);
+    @Query("SELECT * FROM Gain WHERE userId= :userId AND usernameId= :usernameId")
+    List<Gain> getGains(long userId, String usernameId);
 
     @Insert
     void insertGains(Gain gain);
@@ -29,8 +29,8 @@ public interface GainDao {
     @Query("DELETE FROM Gain WHERE id= :gainId")
     void deleteGain(long gainId);
 
-    @Query("DELETE FROM Gain WHERE userId= :userId")
-    void deleteLivretGains(String userId);
+    @Query("DELETE FROM Gain WHERE userId= :userId AND usernameId= :usernameId")
+    void deleteLivretGains(long userId, String usernameId);
 
     @Query("DELETE FROM Gain")
     void deleteAllGains();

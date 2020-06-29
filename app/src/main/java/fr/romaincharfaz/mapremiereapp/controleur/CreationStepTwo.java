@@ -71,23 +71,18 @@ public class CreationStepTwo extends AppCompatActivity {
         nextTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    Solde = accountSolde.getText().toString().trim();
-                    if (Solde.isEmpty()) {
-                        Toast.makeText(CreationStepTwo.this,"Ce champ ne peut pas être vide",Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    updateStatusUser();
-                    Livret livret = new Livret(Name,currentUser);
-                    livretViewModel.insert(livret);
-                    Intent newintent = new Intent(CreationStepTwo.this, PreDashboard.class);
-                    newintent.putExtra(MainActivity.CURRENT_USER,currentUser);
-                    startActivity(newintent);
-                    finish();
-                }catch (Exception e){
-                    Toast.makeText(CreationStepTwo.this,e.toString(),Toast.LENGTH_LONG).show();
+                Solde = accountSolde.getText().toString().trim();
+                if (Solde.isEmpty()) {
+                    Toast.makeText(CreationStepTwo.this,getString(R.string.empty_error),Toast.LENGTH_SHORT).show();
                     return;
                 }
+                updateStatusUser();
+                Livret livret = new Livret(Name,currentUser);
+                livretViewModel.insert(livret);
+                Intent newintent = new Intent(CreationStepTwo.this, PreDashboard.class);
+                newintent.putExtra(MainActivity.CURRENT_USER,currentUser);
+                startActivity(newintent);
+                finish();
            }
         });
 
@@ -101,17 +96,7 @@ public class CreationStepTwo extends AppCompatActivity {
     }
 
     private void updateStatusUser() {
-        String username;
-        String password;
-        String emailAdress;
-        String urlPicture;
-        int userStatus;
-        username = updater.getUsername();
-        password = updater.getPassword();
-        emailAdress = updater.getEmailAdress();
-        urlPicture = updater.getUrlPicture();
-        userStatus = 1;
-        User updatedUser = new User(username,password,emailAdress,urlPicture,userStatus);
-        userViewModel.update(updatedUser);
+        updater.setUserStatus(1);
+        userViewModel.update(updater);
     }
 }

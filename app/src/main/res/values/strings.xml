@@ -13,6 +13,7 @@
     <string name="empty_error">This field can\'t be empty</string>
     <string name="existing_username_error">This username is already used</string>
     <string name="existing_email_error">This email adress is already used</string>
+    <string name="existing_account">This account name is already used</string>
     <string name="password_not_corresponding">Passwords doesn\'t match</string>
     <string name="give_account_name">Give a name to your account book</string>
     <string name="account_solde">What is the current balance ?</string>
@@ -38,6 +39,9 @@
     <string name="cat_transport_commun">Public transport</string>
     <string name="cat_trip">Trip</string>
     <string name="cat_base">Unknown</string>
+    <string name="cat_diy">DIY store</string>
+    <string name="cat_cinema">Cinema</string>
+    <string name="cat_restaurant">Restaurant</string>
     <string name="delete_account">Delete account</string>
     <string name="caution">Attention !</string>
     <string name="caution_msg">Are you sure you want to delete this account ?\nEvery linked items will be deleted too…</string>

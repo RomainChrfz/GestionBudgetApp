@@ -1,9 +1,7 @@
 package fr.romaincharfaz.mapremiereapp.controleur;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.ListPopupWindow;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -11,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,10 +20,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.romaincharfaz.mapremiereapp.CustomDeleteDialog;
+import fr.romaincharfaz.mapremiereapp.view.CustomDeleteDialog;
 import fr.romaincharfaz.mapremiereapp.R;
 import fr.romaincharfaz.mapremiereapp.model.Livret;
-import fr.romaincharfaz.mapremiereapp.view.CategoryAdapter;
 import fr.romaincharfaz.mapremiereapp.view.CategoryItem;
 import fr.romaincharfaz.mapremiereapp.view.GainViewModel;
 import fr.romaincharfaz.mapremiereapp.view.LivretAdapter;
@@ -70,7 +66,8 @@ public class PreDashboard extends AppCompatActivity implements CustomDeleteDialo
             @Override
             public void onItemClick(Livret livret) {
                 Intent intent = new Intent(PreDashboard.this, Dashboard.class);
-                intent.putExtra(Dashboard.CURRENT_LIVRET, livret.getName());
+                intent.putExtra(Dashboard.CURRENT_LIVRET,livret.getId());
+                intent.putExtra(Dashboard.CURRENT_LIVRET_NAME,livret.getName());
                 intent.putExtra(Dashboard.CURRENT_USER, currentUser);
                 startActivity(intent);
             }
@@ -88,16 +85,6 @@ public class PreDashboard extends AppCompatActivity implements CustomDeleteDialo
     }
 
     private void showPopup(View view) {
-
-        //ListPopupWindow listPopupWindow = new ListPopupWindow(this);
-        //initList();
-        //CategoryAdapter adapter = new CategoryAdapter(this, mCategoryList);
-        //listPopupWindow.setAdapter(adapter);
-        //listPopupWindow.setAnchorView(view);
-        //listPopupWindow.setBackgroundDrawable(getDrawable(R.drawable.custom_spinner));
-        //listPopupWindow.setContentWidth(600);
-        //listPopupWindow.show();
-
         PopupMenu popupMenu = new PopupMenu(this,view);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -124,17 +111,6 @@ public class PreDashboard extends AppCompatActivity implements CustomDeleteDialo
         Intent intent = new Intent(PreDashboard.this,CreationStepOne.class);
         intent.putExtra(MainActivity.CURRENT_USER, currentUser);
         startActivity(intent);
-    }
-
-    private void initList() {
-        mCategoryList = new ArrayList<>();
-        mCategoryList.add(new CategoryItem(getString(R.string.cat_base), R.drawable.ic_cat_unknown));
-        mCategoryList.add(new CategoryItem(getString(R.string.cat_courses), R.drawable.ic_cat_courses));
-        mCategoryList.add(new CategoryItem(getString(R.string.cat_fuel), R.drawable.ic_cat_fuel));
-        mCategoryList.add(new CategoryItem(getString(R.string.cat_gift), R.drawable.ic_cat_gift));
-        mCategoryList.add(new CategoryItem(getString(R.string.cat_phone), R.drawable.ic_cat_phone));
-        mCategoryList.add(new CategoryItem(getString(R.string.cat_transport_commun), R.drawable.ic_cat_transport_commun));
-        mCategoryList.add(new CategoryItem(getString(R.string.cat_trip), R.drawable.ic_cat_trip));
     }
 
     @Override

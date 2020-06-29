@@ -69,7 +69,7 @@ public class LivretRepository {
 
         @Override
         protected Void doInBackground(Livret... livrets) {
-            livretDao.deleteLivret(livrets[0].getName());
+            livretDao.deleteLivret(livrets[0].getId());
             return null;
         }
     }

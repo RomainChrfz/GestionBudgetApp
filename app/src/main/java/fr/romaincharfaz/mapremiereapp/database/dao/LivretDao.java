@@ -26,7 +26,7 @@ public interface LivretDao {
     @Update
     void updateLivret(Livret livret);
 
-    @Query("DELETE FROM Livret WHERE name= :livretname")
-    void deleteLivret(String livretname);
+    @Query("DELETE FROM Livret WHERE id= :id")
+    void deleteLivret(long id);
 
 }

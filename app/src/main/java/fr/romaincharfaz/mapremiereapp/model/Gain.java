@@ -4,7 +4,9 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = Livret.class, parentColumns = "name", childColumns = "userId"))
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(foreignKeys ={ @ForeignKey(entity = Livret.class, parentColumns = "id", childColumns = "userId", onDelete = CASCADE, onUpdate = CASCADE), @ForeignKey(entity = User.class, parentColumns = "username", childColumns = "usernameId", onUpdate = CASCADE, onDelete = CASCADE) })
 public class Gain {
 
     @PrimaryKey(autoGenerate = true)
@@ -16,11 +18,12 @@ public class Gain {
     private int year;
     private int category;
     private String urlJustif;
-    private String userId;
+    private long userId;
+    private String usernameId;
 
     //public Gain() { }
 
-    public Gain(double gainValue, String description, int day, int month, int year, int category, String urlJustif, String userId) {
+    public Gain(double gainValue, String description, int day, int month, int year, int category, String urlJustif, long userId, String usernameId) {
         this.gainValue = gainValue;
         this.description = description;
         this.day = day;
@@ -29,6 +32,7 @@ public class Gain {
         this.category = category;
         this.urlJustif = urlJustif;
         this.userId = userId;
+        this.usernameId = usernameId;
     }
 
     // --- GETTER ---
@@ -41,7 +45,8 @@ public class Gain {
     public int getYear() { return year; }
     public int getCategory() { return category; }
     public String getUrlJustif() { return urlJustif; }
-    public String getUserId() { return userId; }
+    public long getUserId() { return userId; }
+    public String getUsernameId() { return usernameId; }
 
     // --- SETTER ---
 
@@ -53,6 +58,7 @@ public class Gain {
     public void setYear(int year) { this.year = year; }
     public void setCategory(int category) { this.category = category; }
     public void setUrlJustif(String urlJustif) { this.urlJustif = urlJustif; }
-    public void setUserId(String userId) { this.userId = userId; }
+    public void setUserId(long userId) { this.userId = userId; }
+    public void setUsernameId(String usernameId) { this.usernameId = usernameId; }
 
 }

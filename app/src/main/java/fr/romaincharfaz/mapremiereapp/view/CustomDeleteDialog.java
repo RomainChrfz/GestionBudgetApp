@@ -1,4 +1,4 @@
-package fr.romaincharfaz.mapremiereapp;
+package fr.romaincharfaz.mapremiereapp.view;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,6 +11,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import java.util.Objects;
+
+import fr.romaincharfaz.mapremiereapp.R;
 
 public class CustomDeleteDialog extends AppCompatDialogFragment {
     private CustomDeleteDialogListener listener1;

@@ -1,6 +1,7 @@
 package fr.romaincharfaz.mapremiereapp.controleur;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -37,7 +38,7 @@ import fr.romaincharfaz.mapremiereapp.view.UserViewModel;
 
 public class MainActivity extends AppCompatActivity {
     public static final String CURRENT_USER = "fr.romaincharfaz.mapremiereapp.controleur.MainActivity.CURRENT_USER";
-    public static final String CURRENT_PASSWORD = "fr.romaincharfaz.mapremiereapp.controleur.MainActivity.CURRENT_PASSWORD";
+    public static final int ADD_USER_REQUEST = 1;
 
     //private static App mInstance;
     //private static Resources res;
@@ -49,23 +50,22 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView mRandom;
     private TextView mRandom2;
-    private String random = new String();
-    private String random2 = new String();
+    private String random;
+    private String random2;
 
     private UserViewModel userViewModel;
     private List<String> usernames = new ArrayList<String>();
     private List<String> passwords = new ArrayList<String>();
     private List<User> allmyusers = new ArrayList<User>();
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // --- TRANSPARENT NOTIFICATION BAR ---
-        requestWindowFeature(1);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        //requestWindowFeature(1);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        //getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         setContentView(R.layout.activity_main);
 
@@ -101,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<User> users) {
                 allmyusers = users;
+                random = new String();
+                random2 = new String();
+                usernames = new ArrayList<>();
                 for (int i=0 ; i<users.size() ; i++) {
                     usernames.add(users.get(i).getUsername());
                     passwords.add(users.get(i).getPassword());
@@ -115,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+                try {
+                    login();
+                }catch (Exception e){Toast.makeText(MainActivity.this,e.toString(),Toast.LENGTH_LONG).show();}
             }
         });
     }
@@ -133,27 +138,37 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        try{
-            if(allmyusers.get(indexer).getUserStatus() == 0) {
-                Intent intent = new Intent(MainActivity.this, CreationStepOne.class);
-                intent.putExtra(CURRENT_USER, usernameInput);
-                startActivity(intent);
-                finish();
-            }else{
-                Intent intent = new Intent(MainActivity.this,PreDashboard.class);
-                intent.putExtra(CURRENT_USER, usernameInput);
-                startActivity(intent);
-                finish();
-            }
-        }catch (Exception e){
-            Toast.makeText(MainActivity.this,e.toString(),Toast.LENGTH_LONG).show();
-            return;
+        if(allmyusers.get(indexer).getUserStatus() == 0) {
+            Intent intent = new Intent(MainActivity.this, CreationStepOne.class);
+            intent.putExtra(CURRENT_USER, usernameInput);
+            startActivity(intent);
+            finish();
+        }else{
+            Intent intent = new Intent(MainActivity.this,PreDashboard.class);
+            intent.putExtra(CURRENT_USER, usernameInput);
+            startActivity(intent);
+            finish();
         }
+
     }
 
     public void openNewUserActivity() {
         Intent NewUserIntent = new Intent(MainActivity.this, AccountCreationFirst.class);
-        startActivity(NewUserIntent);
+        startActivityForResult(NewUserIntent,ADD_USER_REQUEST);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADD_USER_REQUEST && resultCode == RESULT_OK) {
+            String user = data.getStringExtra(AccountCreationFirst.USER);
+            String pwd = data.getStringExtra(AccountCreationFirst.PASSWORD);
+            String email = data.getStringExtra(AccountCreationFirst.EMAIL);
+            String url = data.getStringExtra(AccountCreationFirst.URL);
+            int status = 0;
+            User nuser = new User(user,pwd,email,url,status);
+            userViewModel.insert(nuser);
+        }
+    }
 }

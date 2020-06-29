@@ -29,6 +29,10 @@ import fr.romaincharfaz.mapremiereapp.model.User;
 import fr.romaincharfaz.mapremiereapp.view.UserViewModel;
 
 public class AccountCreationFirst extends AppCompatActivity {
+    public static final String USER = "fr.romaincharfaz.mapremiereapp.controleur.AccountCreationFirst.USER";
+    public static final String PASSWORD = "fr.romaincharfaz.mapremiereapp.controleur.AccountCreationFirst.PASSWORD";
+    public static final String EMAIL = "fr.romaincharfaz.mapremiereapp.controleur.AccountCreationFirst.EMAIL";
+    public static final String URL = "fr.romaincharfaz.mapremiereapp.controleur.AccountCreationFirst.URL";
 
     private TextView mWelcomeText;
     private TextInputLayout mUsernameNew;
@@ -46,15 +50,14 @@ public class AccountCreationFirst extends AppCompatActivity {
 
     private UserViewModel userViewModel;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // --- FOR TRANSPARENT NOTIF BAR ---
-        requestWindowFeature(1  );
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        //requestWindowFeature(1  );
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        //getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         // --- SETTING THE CONTENT VIEW ---
         setContentView(R.layout.activity_account_creation_first);
@@ -220,12 +223,15 @@ public class AccountCreationFirst extends AppCompatActivity {
         String emailInput = mEmailAdress.getEditText().getText().toString().trim();
         String passwordInput = mPasswordOne.getEditText().getText().toString().trim();
         String urlInput = "randomUrl";
-        int userStatus = 0;
         if (!validateUsername() | !validateEmail() | !validatePasswordOne() | !validatePasswordTwo()) {
             return;
         }
-        User user = new User(usernameInput, passwordInput, emailInput, urlInput, userStatus);
-        this.userViewModel.insert(user);
+        Intent data = new Intent();
+        data.putExtra(USER,usernameInput);
+        data.putExtra(PASSWORD,passwordInput);
+        data.putExtra(EMAIL,emailInput);
+        data.putExtra(URL,urlInput);
+        setResult(RESULT_OK,data);
         finish();
     }
 }

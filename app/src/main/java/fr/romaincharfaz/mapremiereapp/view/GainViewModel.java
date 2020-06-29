@@ -44,7 +44,7 @@ public class GainViewModel extends AndroidViewModel {
 
     public void deleteAllGains() { gainRepository.deleteAllGains(); }
 
-    public LiveData<List<Gain>> getAllGains(String username) { return gainRepository.getLiveGains(username); }
+    public LiveData<List<Gain>> getAllGains(long id,String username) { return gainRepository.getLiveGains(id, username); }
 
-    public List<Gain> getGains(String username) { return gainRepository.getGains(username); }
+    public List<Gain> getGains(long id, String username) { return gainRepository.getGains(id, username); }
 }
