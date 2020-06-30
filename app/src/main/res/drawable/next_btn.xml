@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item android:state_pressed="true">
         <shape>
-            <stroke android:color="#ccffffff" android:width="2dp" />
+            <gradient android:startColor="@color/header" android:endColor="@color/footer" android:angle="45" />
             <corners android:radius="50dp" />
         </shape>
     </item>

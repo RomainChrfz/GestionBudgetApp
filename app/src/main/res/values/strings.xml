@@ -22,7 +22,7 @@
     <string name="current_solde">Current balance</string>
     <string name="back">Previous</string>
     <string name="description">Description</string>
-    <string name="valeur_indicate">Value ( indicate + or - )</string>
+    <string name="valeur_indicate">Value</string>
     <string name="mensuel">Monthly</string>
     <string name="jour">Day</string>
     <string name="mois">Month</string>
@@ -42,9 +42,14 @@
     <string name="cat_diy">DIY store</string>
     <string name="cat_cinema">Cinema</string>
     <string name="cat_restaurant">Restaurant</string>
-    <string name="delete_account">Delete account</string>
+    <string name="delete_account">Delete</string>
     <string name="caution">Attention !</string>
     <string name="caution_msg">Are you sure you want to delete this account ?\nEvery linked items will be deleted too…</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="edit_account">Edit</string>
+    <string name="upcoming_fonctionnality">Upcoming fonctionnality, stay tuned !</string>
+    <string name="income">Income(s)</string>
+    <string name="expense">Expense(s)</string>
+    <string name="raw_percentage_txt" translatable="false">xx %</string>
 </resources>

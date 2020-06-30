@@ -140,7 +140,7 @@ public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
     }
 
     private void initList() {
-        mCategoryList = new int[7];
+        mCategoryList = new int[11];
         mCategoryList[0] = R.drawable.ic_cat_unknown;
         mCategoryList[1] = R.drawable.ic_cat_courses;
         mCategoryList[2] = R.drawable.ic_cat_fuel;
@@ -148,5 +148,9 @@ public class GainAdapter extends ListAdapter<Gain,GainAdapter.GainHolder> {
         mCategoryList[4] = R.drawable.ic_cat_phone;
         mCategoryList[5] = R.drawable.ic_cat_transport_commun;
         mCategoryList[6] = R.drawable.ic_cat_trip;
+        mCategoryList[7] = R.drawable.ic_cat_diy;
+        mCategoryList[8] = R.drawable.ic_cat_cinema;
+        mCategoryList[9] = R.drawable.ic_cat_restaurant;
+        mCategoryList[10] = R.drawable.ic_cat_income;
     }
 }

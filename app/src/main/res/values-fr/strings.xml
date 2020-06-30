@@ -22,7 +22,7 @@
     <string name="current_solde">Solde actuel du compte</string>
     <string name="back">Précédent</string>
     <string name="description">Description</string>
-    <string name="valeur_indicate">Valeur ( indiquer + ou - )</string>
+    <string name="valeur_indicate">Valeur</string>
     <string name="mensuel">Mensuel</string>
     <string name="jour">Jour</string>
     <string name="mois">Mois</string>
@@ -48,4 +48,8 @@
     <string name="cat_diy">Bricolage</string>
     <string name="cat_cinema">Cinema</string>
     <string name="cat_restaurant">Restaurant</string>
+    <string name="edit_account">Modifier</string>
+    <string name="upcoming_fonctionnality">Fonctionnalité à venir, restez connecté !</string>
+    <string name="income">Revenu(s)</string>
+    <string name="expense">Dépense(s)</string>
 </resources>

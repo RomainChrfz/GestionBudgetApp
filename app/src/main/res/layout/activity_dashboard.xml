@@ -8,33 +8,100 @@
     tools:context=".controleur.Dashboard"
     >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
+    <TextView
+        android:id="@+id/txt_percentage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="110dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:text="@string/raw_percentage_txt"
+        android:textAlignment="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="80dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/holo_green_light"
+        >
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/income"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_weight="6"
+            android:layout_gravity="center_vertical"
+            />
+        
+        <ImageView
+            android:id="@+id/add_income_btn"
+            android:contentDescription="@string/income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white_bis"
+            android:layout_weight="1"
+            />
+        
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_income"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_marginTop="90dp"
         tools:listitem="@layout/gain_item" />
 
-    <TextView
-        android:id="@+id/total_txt"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="80dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:padding="4dp"
+        android:layout_marginTop="320dp"
+        android:background="@android:color/holo_red_light"
+        >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/expense"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_weight="6"
+            android:layout_gravity="center_vertical"
+            />
 
+        <ImageView
+            android:id="@+id/add_expense_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white_bis"
+            android:layout_weight="1"
+            android:contentDescription="@string/expense"
+            />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_add_gain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="24dp"
-        android:src="@drawable/ic_add_white"        />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_expense"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="360dp"
+        tools:listitem="@layout/gain_item" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

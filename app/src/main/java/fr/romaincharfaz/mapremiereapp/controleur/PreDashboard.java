@@ -87,6 +87,9 @@ public class PreDashboard extends AppCompatActivity implements CustomDeleteDialo
                     case R.id.delete_livret :
                         openDialog();
                         return true;
+                    case R.id.edit_livret :
+                        Toast.makeText(PreDashboard.this,getString(R.string.upcoming_fonctionnality),Toast.LENGTH_SHORT).show();
+                        return true;
                     default :
                         return false;
                 }

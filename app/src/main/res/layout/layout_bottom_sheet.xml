@@ -52,7 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/valeur_indicate"
-            android:inputType="numberDecimal|numberSigned"
+            android:inputType="numberDecimal"
             android:layout_marginHorizontal="20dp"
             android:textColor="@color/black"
             android:background="@drawable/et_custom_bis"
@@ -155,6 +155,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="@string/validate"
+        android:textColor="@color/white"
         android:background="@drawable/next_btn"
         android:layout_marginHorizontal="80dp"
         />
