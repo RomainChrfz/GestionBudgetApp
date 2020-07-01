@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -27,9 +29,10 @@ import java.util.Locale;
 
 import fr.romaincharfaz.mapremiereapp.R;
 import fr.romaincharfaz.mapremiereapp.model.User;
+import fr.romaincharfaz.mapremiereapp.view.CustomPasswordForgottenDialog;
 import fr.romaincharfaz.mapremiereapp.view.UserViewModel;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CustomPasswordForgottenDialog.CustomPasswordForgottenDialogListener {
     public static final String CURRENT_USER = "fr.romaincharfaz.mapremiereapp.controleur.MainActivity.CURRENT_USER";
     public static final int ADD_USER_REQUEST = 1;
 
@@ -38,14 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
     private TextInputLayout mUsername;
     private TextInputLayout mPassword;
-
-    private TextView mRandom;
-    private TextView mRandom2;
-    private String random;
-    private String random2;
+    private TextView mAccountCreation;
 
     private UserViewModel userViewModel;
     private List<String> usernames = new ArrayList<>();
+    private List<String> emails = new ArrayList<>();
     private List<String> passwords = new ArrayList<>();
     private List<User> allmyusers = new ArrayList<>();
 
@@ -63,10 +63,15 @@ public class MainActivity extends AppCompatActivity {
         mUsername = (TextInputLayout) findViewById(R.id.username);
         mPassword = (TextInputLayout) findViewById(R.id.password);
         Button mLoginBtn = (Button) findViewById(R.id.login_btn);
-        TextView mAccountCreation = (TextView) findViewById(R.id.account_creation);
+        mAccountCreation = (TextView) findViewById(R.id.account_creation);
+        TextView mForgotten = (TextView) findViewById(R.id.forgotten_pwd);
 
-        mRandom = (TextView) findViewById(R.id.random_txt);
-        mRandom2 = (TextView) findViewById(R.id.random2_txt);
+        mForgotten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
 
         String text = getString(R.string.account_creation_txt);
         SpannableString ss = new SpannableString(text);
@@ -92,17 +97,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<User> users) {
                 allmyusers = users;
-                random = "";
-                random2 = "";
                 usernames = new ArrayList<>();
+                emails = new ArrayList<>();
                 for (int i=0 ; i<users.size() ; i++) {
                     usernames.add(users.get(i).getUsername());
                     passwords.add(users.get(i).getPassword());
-                    random += (" "+users.get(i).getUsername());
-                    random2 += (" "+users.get(i).getPassword());
+                    emails.add(users.get(i).getEmailAdress());
                 }
-                mRandom.setText(random);
-                mRandom2.setText(random2);
             }
         });
 
@@ -146,6 +147,20 @@ public class MainActivity extends AppCompatActivity {
     public void openNewUserActivity() {
         Intent NewUserIntent = new Intent(MainActivity.this, AccountCreationFirst.class);
         startActivityForResult(NewUserIntent,ADD_USER_REQUEST);
+    }
+
+    private void showDialog() {
+        CustomPasswordForgottenDialog dialog = new CustomPasswordForgottenDialog();
+        dialog.show(getSupportFragmentManager(),"forgotten");
+    }
+
+    @Override
+    public void sendEmail(String txt) {
+        if (emails.contains(txt)) {
+            Snackbar.make(mAccountCreation,"Cet email existe", Snackbar.LENGTH_SHORT).show();
+        }else{
+            Snackbar.make(mAccountCreation,"Cet email n'existe pas",Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override

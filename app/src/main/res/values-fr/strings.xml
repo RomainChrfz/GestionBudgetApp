@@ -4,7 +4,7 @@
     <string name="account_creation_msg">Création de compte</string>
     <string name="account_creation_txt">Vous n\'avez pas de compte ? Créez-en un</string>
     <string name="et_username">Pseudonyme</string>
-    <string name="et_email">Adresse eMail</string>
+    <string name="et_email">Email (Utilisée si mot de passe oublié)</string>
     <string name="et_password_one">Mot de Passe</string>
     <string name="et_password_two">Vérification Mot de Passe</string>
     <string name="btn_connexion">Connection</string>
@@ -52,4 +52,12 @@
     <string name="upcoming_fonctionnality">Fonctionnalité à venir, restez connecté !</string>
     <string name="income">Revenu(s)</string>
     <string name="expense">Dépense(s)</string>
+    <string name="forgotten_password">Mot de passe oublié ?</string>
+    <string name="invalid_email">Veuillez entrer une adresse mail valide</string>
+    <string name="invalid_password">Mot de passe trop simple (au mois une majuscule, 1 minuscule et 1 chiffre)</string>
+    <string name="email_forgotten">Adresse email</string>
+    <string name="pwd_forgotten">Mot de passe oublié</string>
+    <string name="cancel">Annuler</string>
+    <string name="proceed">Valider</string>
+    <string name="forgot_pwd_msg">Veuillez entrer l\'adresse mail liée à votre compte, votre mot de passe vous y sera communiqué</string>
 </resources>

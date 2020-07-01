@@ -80,12 +80,7 @@ public class Dashboard extends AppCompatActivity {
         String currentLivretName = intent.getStringExtra(CURRENT_LIVRET_NAME);
         setTitle(currentLivretName);
 
-        try{
-            initList();
-        }catch(Exception e){
-            Toast.makeText(Dashboard.this,e.toString(),Toast.LENGTH_LONG).show();
-        }
-
+        initList();
 
         perc_txt = findViewById(R.id.txt_percentage);
         progressBar = findViewById(R.id.progressBar);
@@ -120,7 +115,7 @@ public class Dashboard extends AppCompatActivity {
 
         final RecyclerView recyclerView_income = findViewById(R.id.recycler_income);
         recyclerView_income.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView_income.setHasFixedSize(true);
+        //recyclerView_income.setHasFixedSize(true);
 
         final GainAdapter adapter_expense = new GainAdapter();
         final GainAdapter adapter_income = new GainAdapter();

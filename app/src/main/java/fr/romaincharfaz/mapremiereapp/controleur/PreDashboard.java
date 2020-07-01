@@ -63,7 +63,9 @@ public class PreDashboard extends AppCompatActivity implements CustomDeleteDialo
                 intent.putExtra(Dashboard.CURRENT_LIVRET,livret.getId());
                 intent.putExtra(Dashboard.CURRENT_LIVRET_NAME,livret.getName());
                 intent.putExtra(Dashboard.CURRENT_USER, currentUser);
-                startActivity(intent);
+                try {
+                    startActivity(intent);
+                }catch(Exception e){Toast.makeText(PreDashboard.this,e.toString(),Toast.LENGTH_LONG).show();}
             }
         });
 
